@@ -22,11 +22,12 @@ Eventual target languages:
 1. POSIX shell
 1. Prolog
 1. Python
+1. Racket
 1. Rust
-1. Scheme
 
 Current focus languages:
 
 1. Haskell
 1. OCaml
 1. Clojure
+1. Racket

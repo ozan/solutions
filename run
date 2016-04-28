@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# unofficial "strict mode": http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+
+function prep-all {
+  touch "$1.txt"
+
+  if [ ! -e "$1.js" ] ; then echo '#!/usr/bin/env node' > "$1.js"; fi
+  if [ ! -e "$1.hs" ] ; then echo '#!/usr/bin/env runghc' > "$1.hs"; fi
+  # if [ ! -e "$1.ml" ] ; then echo '#!/usr/bin/env ocaml' > "$1.ml"; fi
+  if [ ! -e "$1.py" ] ; then echo '#!/usr/bin/env python' > "$1.py"; fi
+  if [ ! -e "$1.clj" ] ; then echo '#!/usr/bin/env lein-exec' > "$1.clj"; fi
+  if [ ! -e "$1.rkt" ] ; then echo '#!/usr/bin/env racket --script' > "$1.rkt"; fi
+
+  chmod +x $1.*
+}
+
+
+# if called with interpreter, run fn that matches first arg
+[[ $BASH_SOURCE = "$0" ]] && eval "$1" "${@:2}"
