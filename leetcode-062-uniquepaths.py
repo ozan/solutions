@@ -6,8 +6,8 @@ Combinatorial solution: O(width + height) time, O(1) space.
 Note:
 
 *   Runs much faster in Python3.X than Python2.X because the former uses
-    a divide and conquer factorial implementation whereas the latter
-    uses the naive iterative implementation.
+    a divide and conquer factorial strategy whereas the latter
+    uses the naive iterative strategy.
 *   There are much faster implementations of `choose`, or we could trade
     off some space for time by pre-computing factorials.
 
