@@ -18,6 +18,11 @@ function prep-all {
   chmod +x $1.*
 }
 
+# compile and run c sharp
+function cs {
+  mcs -out:/tmp/out.exe "$1" && mono /tmp/out.exe
+}
+
 
 # if called with interpreter, run fn that matches first arg
 [[ $BASH_SOURCE = "$0" ]] && eval "$1" "${@:2}"
