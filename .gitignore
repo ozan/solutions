@@ -1,3 +1,5 @@
 *.dll
 *.exe
 TestResult.xml
+*.pyc
+__pycache__/
