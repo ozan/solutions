@@ -1,20 +1,21 @@
-const { flow, eq } = require('lodash/fp')
+const { reject, eq, flow } = require('lodash/fp')
 
 
 const signature = (word) => {
-  const chars = word.toLowerCase().split()
-  chars.sort()
+  const chars = word.toLowerCase().split('')
+  const foo = chars.sort()
   return chars.join('')
 }
 
 
 class Anagram {
   constructor (subject) {
-    this.target = signature(subject)
+    this.subject = subject
   }
   matches (xs) {
-    const match = flow(signature, eq(this.target))
-    return xs.filter(match)
+    const match = x => signature(x) === signature(this.subject)
+    const same = x => x.toLowerCase() === this.subject.toLowerCase()
+    return reject(same, xs.filter(match))
   }
 }
 

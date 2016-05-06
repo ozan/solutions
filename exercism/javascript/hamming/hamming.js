@@ -1,9 +1,12 @@
-const { eq, zip } = require('lodash/fp')
+const { eq, reject, spread, zip } = require('lodash/fp')
 
 
 class Hamming {
   compute (xs, ys) {
-    return zip(xs, ys).filter(eq.apply).length
+    if (xs.length !== ys.length) throw 'DNA strands must be of equal length.'
+
+    const pairs = zip(xs.split(''), ys.split(''))
+    return reject(spread(eq), pairs).length
   }
 }
 

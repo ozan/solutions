@@ -18,7 +18,7 @@ class PhoneNumber {
   }
   toString () {
     const part = (a, b) => this.digits.slice(a, b)
-    return `(${this.areaCode()}) ${part(4, 7)}-${part(8, 11)}`
+    return `(${this.areaCode()}) ${part(3, 6)}-${part(6, 10)}`
   }
 }
 

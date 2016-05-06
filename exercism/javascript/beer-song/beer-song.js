@@ -1,4 +1,4 @@
-const { mapValues, last } = require('lodash/fp')
+const { mapValues, last, range } = require('lodash/fp')
 
 const bridge = [
   'Go to the store and buy some more',
@@ -13,7 +13,7 @@ ${bridge}, ${m} bottle${pluralM} of beer on the wall.
 
 class BeerSong {
   verse (n) {
-    const params = mapValues(xs => xs[n] || last(xs), {
+    const params = mapValues(xs => n < xs.length ? xs[n] : last(xs), {
       n: ['no more', n],
       nUpper: ['No more', n],
       m: [99, 'no more', n - 1],
@@ -23,8 +23,8 @@ class BeerSong {
     })
     return format(params)
   }
-  sing (a, b) {
-    return range(a, b).map(verse).join('\n\n')
+  sing (a, b=0) {
+    return range(a, b - 1).map(this.verse).join('\n')
   }
 }
 
