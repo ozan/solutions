@@ -1,9 +1,9 @@
 module DNA (toRNA) where
 
-import Data.Maybe
+import Data.Maybe (mapMaybe)
 
-al = [('G', 'C'), ('C', 'G'), ('T', 'A'), ('A', 'U')]
+dnaToRna :: [(Char, Char)]
+dnaToRna = [('G', 'C'), ('C', 'G'), ('T', 'A'), ('A', 'U')]
 
 toRNA :: String -> String
-toRNA dna =
-  catMaybes [lookup x al | x <- dna]
+toRNA = mapMaybe (`lookup` dnaToRna)
