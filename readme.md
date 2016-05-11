@@ -1,33 +1,33 @@
-What will hopefully be a collection of solutions in a bunch of languages for
-problems from project euler, leetcode etc. Mostly an exercise in side-by-side
-comparison of languages, to increase my understanding of those I don't use
-day to day.
 
-Eventual target languages:
+My solutions for problems from Exercism, Leetcode, Project Euler etc in a
+number of languages. Mostly an exercise in side-by-side comparison of languages,
+to increase my understanding of those I don't use day to day.
 
-1. x86 assembly
-1. c
-1. c#
-1. c++
-1. Clojure
-1. Elixer
-1. Go
-1. Haskell
-1. J
-1. Java
-1. JavaScript
-1. Lua
-1. Octave
-1. OCaml
-1. POSIX shell
-1. Prolog
-1. Python
-1. Racket
-1. Rust
+Stats
+===
 
-Current focus languages:
+| Language | Problems solved |
+| --- | ---: |
+| Clojure |       73 |
+| Python |       58 |
+| JavaScript |       35 |
+| Racket |       20 |
+| C# |       19 |
+| Haskell |       17 |
+| Elm |        4 |
+| x86 assembly | 0 |
+| c | 0 |
+| c# | 0 |
+| c++ | 0 |
+| Clojure | 0 |
+| Elixer | 0 |
+| Go | 0 |
+| J | 0 |
+| Java | 0 |
+| Lua | 0 |
+| Octave | 0 |
+| OCaml | 0 |
+| POSIX shell | 0 |
+| Prolog | 0 |
+| Rust | 0 |
 
-1. Haskell
-1. OCaml
-1. Clojure
-1. Racket

@@ -4,6 +4,60 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# TODO: prioritize learning shell to make this shell less shitty
+function make-readme {
+  hs_count=`find . -type f -name '*.hs' \
+                           ! -name '*_test.hs' | wc -l`
+  js_count=`find . -type f -name '*.js' \
+                           ! -name '*.spec.js' \
+                           ! -path '*/node_modules/*' \
+                           ! -path '*/elm-stuff/*' | wc -l`
+  py_count=`find . -type f -name '*.py' \
+                           ! -name '*_test.py' | wc -l`
+  clj_count=`find . -type f -name '*.clj' | wc -l`
+  cs_count=`find . -type f -name '*.cs' \
+                          ! -name '*Test.cs' | wc -l`
+  rkt_count=`find . -type f -name '*.rkt' \
+                          ! -name '*-test.rkt' | wc -l`
+  elm_count=`find . -type f -name '*.elm' \
+                          ! -name '*Tests.elm' \
+                          ! -path '*/elm-stuff/*' | wc -l`
+
+  echo "
+My solutions for problems from Exercism, Leetcode, Project Euler etc in a
+number of languages. Mostly an exercise in side-by-side comparison of languages,
+to increase my understanding of those I don't use day to day.
+
+Stats
+===
+
+| Language | Problems solved |
+| --- | ---: |
+| Clojure | ${clj_count} |
+| Python | ${py_count} |
+| JavaScript | ${js_count} |
+| Racket | ${rkt_count} |
+| C# | ${cs_count} |
+| Haskell | ${hs_count} |
+| Elm | ${elm_count} |
+| x86 assembly | 0 |
+| c | 0 |
+| c# | 0 |
+| c++ | 0 |
+| Clojure | 0 |
+| Elixer | 0 |
+| Go | 0 |
+| J | 0 |
+| Java | 0 |
+| Lua | 0 |
+| Octave | 0 |
+| OCaml | 0 |
+| POSIX shell | 0 |
+| Prolog | 0 |
+| Rust | 0 |
+" > readme.md
+}
+
 
 function prep-all {
   touch "$1.txt"
