@@ -16,9 +16,8 @@ Stats
 | Haskell |       17 |
 | Elm |        4 |
 | x86 assembly | 0 |
-| c | 0 |
-| c# | 0 |
-| c++ | 0 |
+| C | 0 |
+| C++ | 0 |
 | Clojure | 0 |
 | Elixer | 0 |
 | Go | 0 |
