@@ -33,17 +33,17 @@ strainTests =
   , testCase "keep strings" $ do
     let ws = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
     ["zebra", "zombies", "zealot"] @=? keep (isPrefixOf "z") ws
-  -- , testCase "empty discard" $
-  --   ints [] @=? discard (<10) []
-  -- , testCase "discard everything" $
-  --   ints [] @=? discard (<10) [1, 2, 3]
-  -- , testCase "discard first and last" $
-  --   ints [2] @=? discard odd [1, 2, 3]
-  -- , testCase "discard nothing" $
-  --   ints [1,3,5,7] @=? discard even [1,3,5,7]
-  -- , testCase "discard neither first nor last" $
-  --   ints [1, 3] @=? discard even [1, 2, 3]
-  -- , testCase "discard strings" $ do
-  --   let ws = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
-  --   ["apple", "banana", "cherimoya"] @=? discard (isPrefixOf "z") ws
+  , testCase "empty discard" $
+    ints [] @=? discard (<10) []
+  , testCase "discard everything" $
+    ints [] @=? discard (<10) [1, 2, 3]
+  , testCase "discard first and last" $
+    ints [2] @=? discard odd [1, 2, 3]
+  , testCase "discard nothing" $
+    ints [1,3,5,7] @=? discard even [1,3,5,7]
+  , testCase "discard neither first nor last" $
+    ints [1, 3] @=? discard even [1, 2, 3]
+  , testCase "discard strings" $ do
+    let ws = ["apple", "zebra", "banana", "zombies", "cherimoya", "zealot"]
+    ["apple", "banana", "cherimoya"] @=? discard (isPrefixOf "z") ws
   ]
