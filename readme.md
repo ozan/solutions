@@ -9,11 +9,11 @@ Stats
 | Language | Problems solved |
 | --- | ---: |
 | Clojure |       73 |
-| Python |       58 |
-| JavaScript |       35 |
-| Racket |       20 |
+| Python |       59 |
+| JavaScript |       36 |
+| Racket |       21 |
 | C# |       19 |
-| Haskell |       17 |
+| Haskell |       19 |
 | Elm |        4 |
 | x86 assembly | 0 |
 | C | 0 |

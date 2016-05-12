@@ -7,6 +7,7 @@ def triplets_in_range(mn, mx):
     results = set()
     for b in range(4 * int(ceil(mn / 4)), mx, 4):
         prims = primitive_triplets(b)
+        print prims
         for k in range(1, mx + 1):
             for a, b, c in prims:
                 if k*a >= mn and k*c <= mx:
@@ -22,7 +23,8 @@ def primitive_triplets(b):
         n = b / (2 * m)
         if m > n and (m - n) % 2 == 1 and gcd(m, n) == 1:
             a, c = int(m*m - n*n), int(m*m + n*n)
-            results.add(tuple(sorted([a, b, c])))
+            if is_triplet([a, b, c]):
+                results.add(tuple(sorted([a, b, c])))
     return results
 
 
