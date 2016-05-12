@@ -13,7 +13,7 @@ Stats
 | JavaScript |       36 |
 | Racket |       21 |
 | C# |       19 |
-| Haskell |       19 |
+| Haskell |       20 |
 | Elm |        4 |
 | x86 assembly | 0 |
 | C | 0 |
