@@ -37,6 +37,7 @@ Stats
 ===
 
 | Language | Problems solved |
+| --- | --: |
 $(stats)
 | x86 assembly | 0 |
 | C | 0 |

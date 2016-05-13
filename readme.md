@@ -7,6 +7,7 @@ Stats
 ===
 
 | Language | Problems solved |
+| --- | --: |
 | Clojure | 73 |
 | Python | 59 |
 | JavaScript | 36 |
