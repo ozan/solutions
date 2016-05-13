@@ -4,25 +4,30 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# TODO: prioritize learning shell to make this shell less shitty
-function make-readme {
-  hs_count=`find . -type f -name '*.hs' \
-                           ! -name '*_test.hs' | wc -l`
-  js_count=`find . -type f -name '*.js' \
-                           ! -name '*.spec.js' \
-                           ! -path '*/node_modules/*' \
-                           ! -path '*/elm-stuff/*' | wc -l`
-  py_count=`find . -type f -name '*.py' \
-                           ! -name '*_test.py' | wc -l`
-  clj_count=`find . -type f -name '*.clj' | wc -l`
-  cs_count=`find . -type f -name '*.cs' \
-                          ! -name '*Test.cs' | wc -l`
-  rkt_count=`find . -type f -name '*.rkt' \
-                          ! -name '*-test.rkt' | wc -l`
-  elm_count=`find . -type f -name '*.elm' \
-                          ! -name '*Tests.elm' \
-                          ! -path '*/elm-stuff/*' | wc -l`
+function stats {
+  find . -type f ! -path '*.spec.js' \
+                 ! -ipath '*test.*' \
+                 ! -ipath '*tests.*' \
+                 ! -path '*/node_modules/*' \
+                 ! -path '*/elm-stuff/*' \
+                 ! -path './.git/*' \
+                 ! -path '*.md' \
+  | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
+  | sort -n -r \
+  | awk '{ print $2 " " $1 }' \
+  | grep -E '^(clj|py|js|cs|hs|rkt|elm|scm) \d+' \
+  | awk 'BEGIN { names["py"] = "Python";
+                 names["js"] = "JavaScript";
+                 names["cs"] = "C#";
+                 names["clj"] = "Clojure"
+                 names["hs"] = "Haskell"
+                 names["rkt"] = "Racket"
+                 names["elm"] = "Elm"
+                 names["scm"] = "Scheme"}
+               { printf("| %s | %s |\n", names[$1], $2) }'
+}
 
+function make-readme {
   echo "
 My solutions for problems from Exercism, Leetcode, Project Euler etc in a
 number of languages. Mostly an exercise in side-by-side comparison of languages,
@@ -32,18 +37,10 @@ Stats
 ===
 
 | Language | Problems solved |
-| --- | ---: |
-| Clojure | ${clj_count} |
-| Python | ${py_count} |
-| JavaScript | ${js_count} |
-| Racket | ${rkt_count} |
-| C# | ${cs_count} |
-| Haskell | ${hs_count} |
-| Elm | ${elm_count} |
+$(stats)
 | x86 assembly | 0 |
 | C | 0 |
 | C++ | 0 |
-| Clojure | 0 |
 | Elixer | 0 |
 | Go | 0 |
 | J | 0 |
@@ -54,7 +51,7 @@ Stats
 | POSIX shell | 0 |
 | Prolog | 0 |
 | Rust | 0 |
-" > readme.md
+"
 }
 
 

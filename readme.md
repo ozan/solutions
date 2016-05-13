@@ -7,18 +7,17 @@ Stats
 ===
 
 | Language | Problems solved |
-| --- | ---: |
-| Clojure |       73 |
-| Python |       59 |
-| JavaScript |       36 |
-| Racket |       21 |
-| C# |       19 |
-| Haskell |       20 |
-| Elm |        4 |
+| Clojure | 73 |
+| Python | 59 |
+| JavaScript | 36 |
+| Racket | 21 |
+| Haskell | 21 |
+| C# | 19 |
+| Elm | 4 |
+| Scheme | 1 |
 | x86 assembly | 0 |
 | C | 0 |
 | C++ | 0 |
-| Clojure | 0 |
 | Elixer | 0 |
 | Go | 0 |
 | J | 0 |
