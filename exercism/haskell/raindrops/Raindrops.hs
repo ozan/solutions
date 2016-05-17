@@ -8,4 +8,4 @@ cases = [
 
 convert :: Int -> String
 convert n = if null matches then show n else concat matches
-  where matches = map snd $ filter ((== 0) . rem n . fst) cases
+  where matches = [plxng | (p, plxng) <- cases, n `rem` p == 0]

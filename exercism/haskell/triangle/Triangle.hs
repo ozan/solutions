@@ -12,7 +12,7 @@ data TriangleType = Illogical
 triangleType :: Int -> Int -> Int -> TriangleType
 triangleType a b c
   | a' + b' <= c' = Illogical
-  | a * b * c == 0 = Illogical
+  | any (<= 0) [a, b, c] = Illogical
   | otherwise = toEnum equalSides::TriangleType
   where [a', b', c'] = sort [a, b, c]
         equalSides = Set.size $ Set.fromList [a, b, c]
