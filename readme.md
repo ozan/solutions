@@ -12,7 +12,6 @@ to increase my understanding of those I don't use day to day.
 | Racket | 21 |
 | C# | 19 |
 | Elm | 4 |
-| Scheme | 1 |
 | x86 assembly | 0 |
 | C | 0 |
 | C++ | 0 |

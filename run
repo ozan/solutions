@@ -22,8 +22,7 @@ function stats {
                  names["clj"] = "Clojure"
                  names["hs"] = "Haskell"
                  names["rkt"] = "Racket"
-                 names["elm"] = "Elm"
-                 names["scm"] = "Scheme"}
+                 names["elm"] = "Elm"}
                { printf("| %s | %s |\n", names[$1], $2) }'
 }
 
@@ -73,4 +72,4 @@ function cs {
 
 
 # if called with interpreter, run fn that matches first arg
-[[ $BASH_SOURCE = "$0" ]] && eval "$1" "${@:2}"
+[[ ${BASH_SOURCE[0]} = "$0" ]] && eval "$1" "${@:2}"
