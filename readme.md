@@ -7,10 +7,11 @@ to increase my understanding of those I don't use day to day.
 | --- | --: |
 | Clojure | 73 |
 | Python | 59 |
-| Haskell | 41 |
+| Haskell | 42 |
 | JavaScript | 36 |
 | Racket | 21 |
 | C# | 19 |
+| Rust | 4 |
 | Elm | 4 |
 | x86 assembly | 0 |
 | C | 0 |
@@ -24,5 +25,4 @@ to increase my understanding of those I don't use day to day.
 | OCaml | 0 |
 | POSIX shell | 0 |
 | Prolog | 0 |
-| Rust | 0 |
 
