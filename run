@@ -8,6 +8,7 @@ function stats {
   find . -type f ! -path '*.spec.js' \
                  ! -ipath '*test.*' \
                  ! -ipath '*tests.*' \
+                 ! -path '*/tests/*' \
                  ! -path '*/node_modules/*' \
                  ! -path '*/elm-stuff/*' \
                  ! -path './.git/*' \
@@ -15,13 +16,14 @@ function stats {
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
   | awk '{ print $2 " " $1 }' \
-  | grep -E '^(clj|py|js|cs|hs|rkt|elm|scm) \d+' \
+  | grep -E '^(clj|py|js|cs|hs|rkt|elm|rs) \d+' \
   | awk 'BEGIN { names["py"] = "Python";
                  names["js"] = "JavaScript";
                  names["cs"] = "C#";
                  names["clj"] = "Clojure"
                  names["hs"] = "Haskell"
                  names["rkt"] = "Racket"
+                 names["rs"] = "Rust"
                  names["elm"] = "Elm"}
                { printf("| %s | %s |\n", names[$1], $2) }'
 }
@@ -47,7 +49,6 @@ $(stats)
 | OCaml | 0 |
 | POSIX shell | 0 |
 | Prolog | 0 |
-| Rust | 0 |
 "
 }
 
