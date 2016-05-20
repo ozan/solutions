@@ -1,10 +1,16 @@
-use std::ascii::AsciiExt;
-
-pub fn anagrams_for(word: String, others: [String]) -> Vec<&str> {
-    // TODO shouldn't neet to key word every time
-    others.filter(|x| key(x) == key(word))
+pub fn anagrams_for(word: &'static str, others: &[&'static str]) -> Vec<&'static str> {
+    others.iter()
+        .filter(|other| key(other) == key(word) && lower(other) != lower(word))
+        .cloned()
+        .collect()
 }
 
-fn key(word: String) -> String {
-    word.to_lower().chars().sort()
+fn lower(word: &str) -> String {
+    word.to_lowercase()
+}
+
+fn key(word: &str) -> String {
+    let mut chars: Vec<char> = word.to_lowercase().chars().collect();
+    chars.sort();
+    chars.into_iter().collect()
 }
