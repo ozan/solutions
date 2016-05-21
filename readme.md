@@ -11,7 +11,7 @@ to increase my understanding of those I don't use day to day.
 | JavaScript | 38 |
 | Racket | 21 |
 | C# | 19 |
-| Rust | 4 |
+| Rust | 7 |
 | Elm | 4 |
 | x86 assembly | 0 |
 | C | 0 |
