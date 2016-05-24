@@ -1,13 +1,8 @@
-# WIP: one test failing
-
-from math import ceil
-
 
 def triplets_in_range(mn, mx):
     results = set()
-    for b in range(4 * int(ceil(mn / 4)), mx, 4):
+    for b in range(0, mx, 4):
         prims = primitive_triplets(b)
-        print prims
         for k in range(1, mx + 1):
             for a, b, c in prims:
                 if k*a >= mn and k*c <= mx:
@@ -29,8 +24,6 @@ def primitive_triplets(b):
 
 
 def gcd(a, b):
-    if a == 0:
-        return b
     if b == 0:
         return a
     return gcd(b, a % b)

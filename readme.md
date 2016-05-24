@@ -6,8 +6,8 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 | Clojure | 73 |
-| Python | 59 |
-| JavaScript | 45 |
+| Python | 60 |
+| JavaScript | 48 |
 | Haskell | 43 |
 | Racket | 22 |
 | C# | 19 |
