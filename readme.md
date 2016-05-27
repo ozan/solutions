@@ -7,7 +7,7 @@ to increase my understanding of those I don't use day to day.
 | --- | --: |
 | Clojure | 73 |
 | Python | 61 |
-| JavaScript | 54 |
+| JavaScript | 59 |
 | Haskell | 43 |
 | Racket | 22 |
 | C# | 19 |
