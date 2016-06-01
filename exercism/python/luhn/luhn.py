@@ -1,5 +1,3 @@
-from itertools import chain, zip_longest
-
 
 class Luhn(object):
 
@@ -10,8 +8,8 @@ class Luhn(object):
 
     def addends(self):
         kept = self.digits[-1::-2]
-        mapped = (self.MAPPING[d] for d in self.digits[-2::-2])
-        return reversed([int(d) for d in interleave(kept, mapped)])
+        mapped = [self.MAPPING[d] for d in self.digits[-2::-2]]
+        return [int(d) for d in kept + mapped]
 
     def checksum(self):
         return sum(self.addends())
@@ -23,11 +21,3 @@ class Luhn(object):
     def create(given):
         candidate = given * 10
         return candidate + (-Luhn(candidate).checksum() % 10)
-
-
-def interleave(*xss):
-    sentinel = {}
-    return filter(
-        lambda x: x != sentinel,
-        chain(*zip_longest(*xss, fillvalue=sentinel))
-    )
