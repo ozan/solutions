@@ -10,7 +10,7 @@ to increase my understanding of those I don't use day to day.
 | Python | 61 |
 | Haskell | 43 |
 | Racket | 22 |
-| C# | 19 |
+| C# | 22 |
 | Rust | 7 |
 | Elm | 4 |
 | x86 assembly | 0 |
