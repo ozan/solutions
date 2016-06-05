@@ -9,8 +9,8 @@ to increase my understanding of those I don't use day to day.
 | JavaScript | 69 |
 | Python | 61 |
 | Haskell | 43 |
+| C# | 26 |
 | Racket | 22 |
-| C# | 22 |
 | Rust | 7 |
 | Elm | 4 |
 | x86 assembly | 0 |
