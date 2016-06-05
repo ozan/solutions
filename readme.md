@@ -9,7 +9,7 @@ to increase my understanding of those I don't use day to day.
 | JavaScript | 69 |
 | Python | 61 |
 | Haskell | 43 |
-| C# | 26 |
+| C# | 32 |
 | Racket | 22 |
 | Rust | 7 |
 | Elm | 4 |
