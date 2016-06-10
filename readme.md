@@ -8,8 +8,8 @@ to increase my understanding of those I don't use day to day.
 | Clojure | 73 |
 | JavaScript | 69 |
 | Python | 61 |
+| C# | 49 |
 | Haskell | 43 |
-| C# | 42 |
 | Racket | 22 |
 | Rust | 7 |
 | Elm | 4 |
