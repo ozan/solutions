@@ -1,19 +1,15 @@
 
+
 def abbreviate(phrase):
     return ''.join(caps(phrase))
 
 
 def caps(phrase):
-    yield phrase[0]
-    for a, b in adjactent_pairs(phrase):
+    a = ' '
+    for b in phrase:
         if case_change(a, b) or alpha_change(a, b):
             yield b.upper()
-
-
-def adjactent_pairs(xs):
-    ys = iter(xs)
-    next(ys, None)
-    return zip(xs, ys)
+        a = b
 
 
 def case_change(a, b):
