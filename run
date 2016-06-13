@@ -13,13 +13,15 @@ function stats {
                  ! -path '*/elm-stuff/*' \
                  ! -path './.git/*' \
                  ! -path '*.md' \
+                 ! -path '*/CMakeFiles/*' \
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
   | awk '{ print $2 " " $1 }' \
-  | grep -E '^(clj|py|js|cs|hs|rkt|elm|rs) \d+' \
-  | awk 'BEGIN { names["py"] = "Python";
-                 names["js"] = "JavaScript";
-                 names["cs"] = "C#";
+  | grep -E '^(clj|py|js|cs|cpp|hs|rkt|elm|rs) \d+' \
+  | awk 'BEGIN { names["py"] = "Python"
+                 names["js"] = "JavaScript"
+                 names["cs"] = "C#"
+                 names["cpp"] = "C++"
                  names["clj"] = "Clojure"
                  names["hs"] = "Haskell"
                  names["rkt"] = "Racket"
@@ -39,7 +41,6 @@ to increase my understanding of those I don't use day to day.
 $(stats)
 | x86 assembly | 0 |
 | C | 0 |
-| C++ | 0 |
 | Elixer | 0 |
 | Go | 0 |
 | J | 0 |

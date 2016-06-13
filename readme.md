@@ -13,9 +13,9 @@ to increase my understanding of those I don't use day to day.
 | Racket | 22 |
 | Rust | 7 |
 | Elm | 4 |
+| C++ | 1 |
 | x86 assembly | 0 |
 | C | 0 |
-| C++ | 0 |
 | Elixer | 0 |
 | Go | 0 |
 | J | 0 |
