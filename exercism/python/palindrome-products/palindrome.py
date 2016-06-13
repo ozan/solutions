@@ -1,7 +1,3 @@
-# strategy:
-# generate palindromes between min_factor ^2 and max_factor^2 in the
-# appropriate direction, then try to factor each one
-
 
 def is_palindrome(n):
     return str(n) == str(n)[::-1]
