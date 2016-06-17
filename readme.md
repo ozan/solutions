@@ -6,14 +6,14 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 | Clojure | 73 |
+| Python | 70 |
 | JavaScript | 69 |
-| Python | 61 |
 | C# | 56 |
-| Haskell | 43 |
-| Racket | 22 |
-| Rust | 7 |
+| Haskell | 39 |
+| Racket | 21 |
+| C++ | 19 |
+| Rust | 6 |
 | Elm | 4 |
-| C++ | 1 |
 | x86 assembly | 0 |
 | C | 0 |
 | Elixer | 0 |
