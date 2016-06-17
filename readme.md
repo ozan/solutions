@@ -5,13 +5,13 @@ to increase my understanding of those I don't use day to day.
 
 | Language | Problems solved |
 | --- | --: |
+| Python | 73 |
 | Clojure | 73 |
-| Python | 70 |
 | JavaScript | 69 |
 | C# | 56 |
 | Haskell | 39 |
+| C++ | 22 |
 | Racket | 21 |
-| C++ | 19 |
 | Rust | 6 |
 | Elm | 4 |
 | x86 assembly | 0 |
