@@ -1,14 +1,17 @@
 #include "triangle.h"
 #include <set>
 
-triangle::kinds triangle::kind(float a, float b, float c) {
-  if (a <= 0 || b <= 0 || c <= 0)
-    throw std::domain_error("Sides must be > 0");
+triangle::kinds triangle::kind(double a, double b, double c) {
+  if (a > b)
+    std::swap(a, b);
+  if (a > c)
+    std::swap(a, c);
+  if (b > c)
+    std::swap(b, c);
 
-  int mx = std::max(a, std::max(b, c));
-  if (a + b + c - mx <= mx)
+  if (a <= 0 || a + b <= c)
     throw std::domain_error("Invalid triangle");
 
-  int n = (std::set<float>{a, b, c}).size();
-  return (kinds)(n - 1);
+  int n = (std::set<double>{a, b, c}).size();
+  return static_cast<kinds>(n - 1);
 }

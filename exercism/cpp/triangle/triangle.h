@@ -2,5 +2,5 @@
 
 namespace triangle {
 enum kinds { equilateral, isosceles, scalene };
-kinds kind(float a, float b, float c);
+kinds kind(double a, double b, double c);
 }

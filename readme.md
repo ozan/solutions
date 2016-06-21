@@ -10,7 +10,7 @@ to increase my understanding of those I don't use day to day.
 | JavaScript | 69 |
 | C# | 56 |
 | Haskell | 39 |
-| C++ | 36 |
+| C++ | 38 |
 | Racket | 21 |
 | Rust | 6 |
 | Elm | 4 |

@@ -4,8 +4,6 @@
 
 namespace crypto_square {
 
-// TODO: move normalization logic into constructor
-
 cipher::cipher(std::string given) {
   std::stringstream ss;
   for (char ch : given) {
