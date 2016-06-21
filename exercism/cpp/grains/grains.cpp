@@ -1,5 +1,5 @@
 #include "grains.h"
 
-unsigned long long int grains::square(int n) { return 1ULL << (n - 1); }
+uint64_t grains::square(int n) { return static_cast<uint64_t>(1) << (n - 1); }
 
-unsigned long long int grains::total() { return -1; }
+uint64_t grains::total() { return static_cast<uint64_t>(-1); }

@@ -1,4 +1,6 @@
+#include <stdint.h>
+
 namespace grains {
-unsigned long long int square(int n);
-unsigned long long int total();
+uint64_t square(int n);
+uint64_t total();
 }
