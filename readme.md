@@ -9,7 +9,7 @@ to increase my understanding of those I don't use day to day.
 | Clojure | 73 |
 | JavaScript | 69 |
 | C# | 56 |
-| C++ | 40 |
+| C++ | 42 |
 | Haskell | 39 |
 | Racket | 21 |
 | Rust | 6 |
