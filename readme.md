@@ -5,11 +5,11 @@ to increase my understanding of those I don't use day to day.
 
 | Language | Problems solved |
 | --- | --: |
-| Python | 109 |
+| Python | 117 |
 | Clojure | 73 |
-| JavaScript | 70 |
+| JavaScript | 72 |
 | C# | 56 |
-| C++ | 49 |
+| C++ | 51 |
 | Haskell | 39 |
 | Racket | 21 |
 | Rust | 6 |
