@@ -1,0 +1,115 @@
+# Return "Pling", "Plang" and "Plong" for n % 3 == 0, n % 5 == 0 and n % 7 == 0
+# respectively. When divisible by multiple, return the combination. When divisible
+# by none, return ascii form of n.
+#
+# $a0 - input value of integer in question
+# $a1 - input, pointer to expected location of transcribed string
+# $t0 - whether n is divisible by 3
+# $t1 - whether n is divisible by 5
+# $t1 - whether n is divisible by 7
+# $t4 - copy of a1, as we shouldn't mutate it
+# $t5 - whether n is divisible by _any_ of the 3
+# $t6 - buffer for writing chars from immediates
+# $t7 - pointer for stack used to convert int to ascii
+# $t8 - stack base
+# $t9 - just the number 10
+
+.globl raindrops
+
+raindrops:
+        move    $t4, $a1                # make a copy of output location
+
+        rem     $t0, $a0, 3
+        seq     $t0, $t0, $zero         # true if n % 3 == 0
+        rem     $t1, $a0, 5
+        seq     $t1, $t1, $zero         # true if n % 5 == 0
+        rem     $t2, $a0, 7
+        seq     $t2, $t2, $zero         # true if n % 7 == 0
+
+        or      $t5, $t0, $t1
+        or      $t5, $t5, $t2           # true if _any_ k divides n
+
+        beq     $t5, $zero, no_factors
+
+write_words:
+        bgt     $t0, $zero, write_pling
+        bgt     $t1, $zero, write_plang
+        bgt     $t2, $zero, write_plong
+        j       end
+
+write_pling:
+        li      $t6, 0x50               # P
+        sb      $t6, 0($t4)
+        li      $t6, 0x6C               # l
+        sb      $t6, 1($t4)
+        li      $t6, 0x69               # i
+        sb      $t6, 2($t4)
+        li      $t6, 0x6E               # n
+        sb      $t6, 3($t4)
+        li      $t6, 0x67               # g
+        sb      $t6, 4($t4)
+        addu    $t4, $t4, 5             # Increment output pointer by 5
+        move    $t0, $zero              # Zero out $t0 to avoid infinite loop
+        j       write_words
+
+write_plang:
+        li      $t6, 0x50               # P
+        sb      $t6, 0($t4)
+        li      $t6, 0x6C               # l
+        sb      $t6, 1($t4)
+        li      $t6, 0x61               # a
+        sb      $t6, 2($t4)
+        li      $t6, 0x6E               # n
+        sb      $t6, 3($t4)
+        li      $t6, 0x67               # g
+        sb      $t6, 4($t4)
+        addu    $t4, $t4, 5             # Increment output pointer by 5
+        move    $t1, $zero              # Zero out $t1 to avoid infinite loop
+        j       write_words
+
+write_plong:
+        li      $t6, 0x50               # P
+        sb      $t6, 0($t4)
+        li      $t6, 0x6C               # l
+        sb      $t6, 1($t4)
+        li      $t6, 0x6F               # o
+        sb      $t6, 2($t4)
+        li      $t6, 0x6E               # n
+        sb      $t6, 3($t4)
+        li      $t6, 0x67               # g
+        sb      $t6, 4($t4)
+        addu    $t4, $t4, 5             # Increment output pointer by 5
+        move    $t2, $zero              # Zero out $t2 to avoid infinite loop
+        j       write_words
+
+no_factors:
+        li      $t9, 10                 # We will repeatedly need the number 10 for dividing.
+        move    $t0, $a0                # Make a copy of input integer
+
+        li      $v0, 9                  # Allocate some space on the heap for a stack
+        li      $a0, 12                 # specify 12 bytes - length of longest expected
+        syscall
+        move    $t7, $v0                # keep track of stack pointer
+        move    $t8, $v0                # which is also the base of the stack
+
+unfold_int_to_ascii:
+        beq     $t0, $zero, fold_ascii  # If we are done unfolding into ascii, output ascii in reverse.
+        div     $t0, $t9                # Otherwise divide by 10,
+        mfhi    $t1,
+        sb      $t1, 0($t7)             # add the remainder to the stack,
+        mflo    $t0                     # retain quotient as the new dividand,
+        addi    $t7, $t7, 1             # increment the stack pointer,
+        j       unfold_int_to_ascii     # and loop.
+
+fold_ascii:
+        addi    $t7, $t7, -1            # decrement the stack pointer,
+        blt     $t7, $t8, end           # If we have exhausted the stack, we are done.
+        lb      $t1, 0($t7)             # Load a single char from the stack,
+        addi    $t1, $t1, 48            # offset it by 48 for '0',
+        sb      $t1, 0($t4)             # write it to output,
+        addi    $t4, $t4, 1             # increment the output pointer,
+        j       fold_ascii              # and loop.
+
+end:
+        sb      $zero, 0($t4)           # Terminate output string by writing null byte
+        jr      $ra

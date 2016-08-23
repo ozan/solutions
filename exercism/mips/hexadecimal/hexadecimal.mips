@@ -1,0 +1,40 @@
+# Convert ascii string of hexadecimal digits to an integer
+#
+# Strategy: loop through char bytes until the null byte is reached. At each step,
+# left shift the accumulator by 4 to effect a multiplication by 16, then add the
+# value of the char.
+#
+# $a0 - input, pointer to null-terminated hex string
+# $v0 - output, integer form of binary string
+# $t0 - address of start of lookup table
+# $t1 - ascii value of the char pointed to
+# $t2 - address of the integer value for the char in lookup table
+# $t3 - integer value of hex char (0 - 15)
+
+.globl hex_convert
+
+hex_convert:
+        li      $v0, 0                  # Reset accumulator to 0.
+        la      $t0, hexvals            # Load address of lookup into register.
+
+loop:
+        lb      $t1, 0($a0)             # Load a character,
+        beq     $t1, $zero, end         # if it is null then return.
+        sll     $v0, $v0, 4             # Otherwise first shift accumulator by 4 to multiply by 16.
+        addi    $t2, $t1, -48           # Then find the offset of the char from '0'
+        sll     $t2, $t2, 2             # in bytes,
+        addu    $t2, $t2, $t0           # use it to calcute address in lookup,
+        lw      $t3, 0($t2)             # retrieve its integer value,
+        addu    $v0, $v0, $t3           # and add that to the accumulator.
+        addi    $a0, $a0, 1             # Finally, increment the pointer
+        j       loop                    # and loop.
+
+end:
+        jr $ra
+
+.data
+# to avoid annoying branching to handle 0-9, a-f and A-F separately, simply
+# look up the hex value for an ascii character offset by 48 (the '0' char)
+hexvals: .word 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0,
+               10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+               10, 11, 12, 13, 14, 15

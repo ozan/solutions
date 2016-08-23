@@ -1,0 +1,30 @@
+.globl is_leap_year
+
+#
+# Determine if the given year is a leap year
+#
+# There is a leap year every year whose number is perfectly divisible by four,
+# except for years which are both divisible by 100 and not divisible by 400.
+#
+# Variables:
+#
+# $a0 - given value (year, as an int)
+# $v0 - final value - is $a0 a leap year?
+# $t0 - whether n is *not* divisible by 100 (boolean)
+# $t1 - whether n is divisible by 400 (boolean)
+
+is_leap_year:
+
+andi    $v0,$a0,3               # Consider the two lowest bits of n.
+sltiu   $v0,$v0,1               # If they are zero, then n is divisible by 4
+
+rem     $t0,$a0,100             # Obtain n modulo 100
+slt     $t0,$zero,$t0           # If it is not zero, then n is not divisible by 100.
+
+rem     $t1,$a0,400             # Obtain n modulo 400
+sltiu   $t1,$t1,1               # If it is zero, then n is divisible by 400.
+
+and     $v0,$v0,$t0             # Leap year if divisible by 4 and not 100...
+or      $v0,$v0,$t1             # or divisible by 400.
+
+jr $ra

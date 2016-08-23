@@ -12,11 +12,11 @@ to increase my understanding of those I don't use day to day.
 | C# | 56 |
 | Haskell | 39 |
 | Racket | 21 |
+| MIPS Assembly | 20 |
 | Rust | 6 |
 | Elm | 4 |
+| C | 4 |
 | x86 assembly | 0 |
-| C | 0 |
-| Elixer | 0 |
 | Go | 0 |
 | J | 0 |
 | Java | 0 |

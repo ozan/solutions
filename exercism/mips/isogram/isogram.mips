@@ -1,0 +1,48 @@
+# Determine if the given string is an isogram, meaning that the same character
+# does not appear more than once.
+#
+# Strategy: use the bits of a single word to represent set of encountered letters
+#
+# $a0 - input, pointer to null-terminated string of chars 0-7
+# $v0 - output, boolean representing is or is not isogram
+# $t0 - set of bits
+# $t1 - an encountered character
+
+.globl is_isogram
+
+is_isogram:
+        li      $t0, 0                  # Reset set to 0.
+
+loop:
+        lb      $t1, 0($a0)             # Load a character,
+        beq     $t1, $zero, true        # if end of string, return true.
+
+        addi    $t2, $t1, -65           # If less than 'A'...
+        blt     $t2, $zero, increment   # continue to next letter.
+
+        addi    $t1, $t1, -97           # Find offset from 'a'.
+        blt     $t1, $zero, downcase    # If negative, presume upper case, so downcase
+
+consider_seen:
+        li      $t3, 1
+        sllv    $t3, $t3, $t1           # Create bit mask
+        and     $t4, $t0, $t3           # Apply to set.
+        bgt     $t4, $zero, false       # If char has been seen, return false.
+
+        or      $t0, $t0, $t3           # Otherwise flip bit for char
+
+increment:
+        addi    $a0, $a0, 1             # Finally, increment the pointer
+        j       loop                    # and loop.
+
+downcase:
+        addi    $t1, $t1, 32            # Upper -> lower ascii value
+        j       consider_seen
+
+false:
+        li      $v0, 0
+        jr      $ra
+
+true:
+        li      $v0, 1
+        jr      $ra

@@ -1,0 +1,110 @@
+#
+# Test raindrops with some examples
+#
+# a0 - input word, for callee
+# a1 - pointer to output string, for callee
+# s0 - num of tests left to run
+# s1 - address of input string
+# s2 - address of expected output string
+# s3 - char byte of input
+# s4 - char byte of output
+# s5 - copy of output location
+#
+# raindrops must:
+# - be named raindrops and declared as global
+# - read input value from a0
+# - follow the convention of using the t0-9 registers for temporary storage
+# - (if it uses s0-7 then it is responsible for pushing existing values to the stack then popping them back off before returning)
+# - write a zero-terminated string representing the return value to address given in a1
+
+.data
+
+# number of test cases
+n: .word 15
+# input values and expected output values (all null terminated)
+ins:  .word     1,       3,       5,       7,       6,       9,      10,      14,           15,           21,      25,           35,      49,   52,               105
+outs: .asciiz "1", "Pling", "Plang", "Plong", "Pling", "Pling", "Plang", "Plong", "PlingPlang", "PlingPlong", "Plang", "PlangPlong", "Plong", "52", "PlingPlangPlong"
+
+failmsg: .asciiz "failed for test input: "
+expectedmsg: .asciiz ". expected "
+tobemsg: .asciiz " to be "
+okmsg: .asciiz "all tests passed"
+
+
+.text
+
+runner:
+        lw      $s0, n
+        la      $s1, ins
+        la      $s2, outs
+
+        li      $v0, 9                  # code for allocating heap memory
+        li      $a0, 16                 # specify 16 bytes - length of longest expected output
+        syscall
+        move    $a1, $v0                # location of allocated memory is where callee writes result
+        move    $s5, $v0                # also keep a copy for ourselves
+
+run_test:
+        jal     clear_output            # zero out output location
+        lw      $a0, 0($s1)             # load input value into a0
+        jal     raindrops               # call subroutine under test
+
+scan:
+        lb      $s3, 0($s2)             # load one byte of the expectation
+        lb      $s4, 0($a1)             # load one byte of the actual
+        bne     $s3, $s4, exit_fail     # if the two differ, the test has failed
+        addi    $s2, $s2, 1             # point to next expectation byte
+        addi    $a1, $a1, 1             # point to next actual byte
+        bne     $s3, $zero, scan        # if one char (and therefore the other) was not null, loop
+
+done_scan:
+        addi    $s1, $s1, 4             # point to next input word
+        sub     $s0, $s0, 1             # decrement num of tests left to run
+        bgt     $s0, $zero, run_test    # if more than zero tests to run, jump to run_test
+
+exit_ok:
+        la      $a0, okmsg              # put address of okmsg into a0
+        li      $v0, 4                  # 4 is print string
+        syscall
+
+        li      $v0, 10                 # 10 is exit with zero status (clean exit)
+        syscall
+
+exit_fail:
+        la      $a0, failmsg            # put address of failmsg into a0
+        li      $v0, 4                  # 4 is print string
+        syscall
+
+        lw      $a0, 0($s1)             # print input that failed on
+        li      $v0, 1                  # 1 -> "print integer"
+        syscall
+
+        la      $a0, expectedmsg
+        li      $v0, 4
+        syscall
+
+        move    $a0, $a1                # print actual that failed on
+        li      $v0, 4
+        syscall
+
+        la      $a0, tobemsg
+        li      $v0, 4
+        syscall
+
+        move    $a0, $s2                # print expected value that failed on
+        li      $v0, 4
+        syscall
+
+        li      $a0, 1                  # set error code to 1
+        li      $v0, 17                 # 17 is exit with error
+        syscall
+
+clear_output:
+        sw      $zero, 0($s5)           # zero out output by storing 4 words (16 bytes) of zeros
+        sw      $zero, 4($s5)
+        sw      $zero, 8($s5)
+        sw      $zero, 12($s5)
+        jr      $ra
+
+# # Include your implementation here if you wish to run this from the MARS GUI.
+# .include "example.mips"

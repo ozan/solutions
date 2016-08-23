@@ -1,0 +1,45 @@
+# Perform RNA transcription with the rules:
+#
+# C -> G
+# G -> C
+# T -> A
+# A -> U
+#
+# $a0 - input, pointer to null-terminated string of chars 0-7
+# $a1 - input, pointer to expected location of transcribed string
+# $t0 - location of lookup table
+# $t1 - ascii value of the input char pointed to
+# $t2 - address to result char in lookup table
+# $t3 - ascii value of result char
+# $t4 - copy of a1, as we shouldn't mutate it
+
+.globl transcribe_rna
+
+transcribe_rna:
+        la      $t0, lookup             # Load address of lookup into register.
+        move    $t4, $a1                # make a copy of output location
+
+loop:
+        lb      $t1, 0($a0)             # Load a character,
+        beq     $t1, $zero, end         # if it is null then end.
+
+        addi    $t2, $t1, -65           # Otherwise find char's offset from 'A'
+        sll     $t2, $t2, 2             # in bytes
+        addu    $t2, $t2, $t0           # and determine address in lookup,
+
+        lb      $t3, 0($t2)             # Load the transcribed char into a register
+        sb      $t3, 0($t4)             # and write it to the appropriate output location.
+
+        addi    $a0, $a0, 1             # Finally, increment input pointer
+        addi    $t4, $t4, 1             # and output pointer
+        j       loop                    # and loop.
+
+end:
+        sb      $zero, 0($t4)           # Terminate output string by writing null byte
+        jr      $ra
+
+
+.data
+# translation ascii value for given nucleotide ascii value, offset by 65 (value of 'A')
+# inputs are presumed to all be upper case
+lookup: .word 85, 0, 71, 0, 0, 0, 67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65

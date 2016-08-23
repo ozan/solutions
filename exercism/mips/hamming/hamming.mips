@@ -1,0 +1,28 @@
+# Calculate the hamming distance of two strings
+
+# $a0 - pointer to string 1
+# $a1 - pointer to string 2
+# $v0 - output, integer form of binary string
+# $t0 - character of string 1
+# $t1 - character of string 2
+# $t2 - are the characters different?
+
+.globl hamming_distance
+
+hamming_distance:
+        li      $v0, 0                  # Reset accumulator to 0.
+
+loop:
+        lb      $t0, 0($a0)             # Load a character of string 1,
+        beq     $t0, $zero, end         # if it is null then return.
+        lb      $t1, 0($a1)             # Otherwise also load a character of string 2.
+
+        sne     $t2, $t0, $t1           # Determine if characters are different
+        addu    $v0, $v0, $t2           # and add the difference to accumulator.
+
+        addi    $a0, $a0, 1             # Finally, increment the pointer for string 1
+        addi    $a1, $a1, 1             # and for string 2
+        j       loop                    # and loop.
+
+end:
+        jr $ra

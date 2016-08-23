@@ -1,0 +1,105 @@
+#
+# Test hamming_distance with some examples
+#
+# s0 - num of tests left to run
+# s1 - address of input word 1
+# s2 - address of input word 2
+# s3 - address of expected output word
+# s4 - char byte
+# s5 - output word
+#
+# hamming_distance must:
+# - be named hamming_distance and declared as global
+# - read input address of first string from a0
+# - read input address of second string from a1
+# - follow the convention of using the t0-9 registers for temporary storage
+# - (if it uses s0-7 then it is responsible for pushing existing values to the stack then popping them back off before returning)
+# - write integer result to v0
+
+.data
+
+# number of test cases
+n: .word 13
+# input values (null terminated) & expected output values (word sized ints)
+xs: .asciiz "A", "GGACTGA", "A", "AG", "AT", "GGACG", "ACCAGGG", "AGA", "AGG", "TAG", "GATACA", "GGACGGATTCTG", ""
+ys: .asciiz "A", "GGACTGA", "G", "CT", "CT", "GGTCG", "ACTATGG", "AGG", "AGA", "GAT", "GCATAA", "AGGACGGATTCT", ""
+outs: .word   0,         0,   1,    2,    1,       1,         2,     1,     1,     2,        4,              9,  0
+
+failmsg: .asciiz "failed for test inputs: "
+comma: .asciiz ", "
+expectedmsg: .asciiz ". expected "
+tobemsg: .asciiz " to be "
+okmsg: .asciiz "all tests passed"
+
+
+.text
+
+runner:
+        lw      $s0, n
+        la      $s1, xs
+        la      $s2, ys
+        la      $s3, outs
+
+run_test:
+        move    $a0, $s1                # move address of input arg 1 to a0
+        move    $a1, $s2                # move address of input arg 2 to a0
+        jal     hamming_distance        # call subroutine under test
+        move    $v1, $v0                # move return value in v0 to v1 because we need v0 for syscall
+
+        lw      $s5, 0($s3)             # read expected output from memory
+        bne     $v1, $s5, exit_fail     # if expected doesn't match actual, jump to fail
+
+scan:
+        addi    $s1, $s1, 1             # move input address one byte forward
+        addi    $s2, $s2, 1
+        lb      $s4, 0($s1)             # load byte
+        beq     $s4, $zero, done_scan   # if char null, break loop
+        j       scan                    # loop
+
+done_scan:
+        addi    $s1, $s1, 1             # move input address one byte past null
+        addi    $s2, $s2, 1
+
+        addi    $s3, $s3, 4             # move to next word in output
+        sub     $s0, $s0, 1             # decrement num of tests left to run
+        bgt     $s0, $zero, run_test    # if more than zero tests to run, jump to run_test
+
+exit_ok:
+        la      $a0, okmsg              # put address of okmsg into a0
+        li      $v0, 4                  # 4 is print string
+        syscall
+
+        li      $v0, 10                 # 10 is exit with zero status (clean exit)
+        syscall
+
+exit_fail:
+        la      $a0, failmsg            # put address of failmsg into a0
+        li      $v0, 4                  # 4 is print string
+        syscall
+
+        move    $a0, $s1                # print input that failed on
+        li      $v0, 4
+        syscall
+
+        la      $a0, expectedmsg
+        li      $v0, 4
+        syscall
+
+        move    $a0, $v1                # print actual that failed on
+        li      $v0, 1                  # 1 is print integer
+        syscall
+
+        la      $a0, tobemsg
+        li      $v0, 4
+        syscall
+
+        move    $a0, $s5                # print expected value that failed on
+        li      $v0, 1                  # 1 is print integer
+        syscall
+
+        li      $a0, 1                  # set error code to 1
+        li      $v0, 17                 # 17 is exit with error
+        syscall
+
+# # Include your implementation here if you wish to run this from the MARS GUI.
+# .include "impl.mips"

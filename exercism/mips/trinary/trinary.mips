@@ -1,0 +1,29 @@
+# Convert ascii string of trinary digits to integer
+#
+# Strategy: loop through char bytes until the null byte is reached. At each step,
+# triple the accumulator value then add to it the integer value of the char.
+# Tripling of N is effected by adding N to N left-shifted.
+#
+# $a0 - input, pointer to null-terminated string of 0's, 1's and 2's
+# $v0 - output, integer form of binary string
+# $t0 - ascii value of the char pointed to
+# $t1 - integer value (0, 1 or 2) of the char pointed to
+# $t2 - temp used in tripling procedure
+
+.globl trinary_convert
+
+trinary_convert:
+        li      $v0, 0                  # Reset accumulator to 0.
+
+loop:
+        lb      $t0, 0($a0)             # Load a character,
+        beq     $t0, $zero, end         # if it is null then return.
+        sll     $t2, $v0, 1             # Otherwise triple the accumulator by first shifting
+        addu    $v0, $v0, $t2           # then adding to its prior value.
+        addi    $t1, $t0, -48           # Also calculate the value of the character,
+        addu    $v0, $v0, $t1           # and add that to the accumulator.
+        addi    $a0, $a0, 1             # Finally, increment the pointer
+        j       loop                    # and loop.
+
+end:
+        jr $ra
