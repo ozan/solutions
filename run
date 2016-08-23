@@ -9,6 +9,7 @@ function stats {
                  ! -ipath '*test.*' \
                  ! -ipath '*tests.*' \
                  ! -path '*/tests/*' \
+                 ! -path '*/runner.mips' \
                  ! -path '*/node_modules/*' \
                  ! -path '*/elm-stuff/*' \
                  ! -path './.git/*' \
@@ -17,15 +18,17 @@ function stats {
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
   | awk '{ print $2 " " $1 }' \
-  | grep -E '^(clj|py|js|cs|cpp|hs|rkt|elm|rs) \d+' \
+  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips) \d+' \
   | awk 'BEGIN { names["py"] = "Python"
                  names["js"] = "JavaScript"
+                 names["c"] = "C"
                  names["cs"] = "C#"
                  names["cpp"] = "C++"
                  names["clj"] = "Clojure"
                  names["hs"] = "Haskell"
                  names["rkt"] = "Racket"
                  names["rs"] = "Rust"
+                 names["mips"] = "MIPS Assembly"
                  names["elm"] = "Elm"}
                { printf("| %s | %s |\n", names[$1], $2) }'
 }
@@ -40,8 +43,6 @@ to increase my understanding of those I don't use day to day.
 | --- | --: |
 $(stats)
 | x86 assembly | 0 |
-| C | 0 |
-| Elixer | 0 |
 | Go | 0 |
 | J | 0 |
 | Java | 0 |
