@@ -3,3 +3,4 @@
 TestResult.xml
 *.pyc
 __pycache__/
+*.out

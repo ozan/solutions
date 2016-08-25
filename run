@@ -14,6 +14,7 @@ function stats {
                  ! -path '*/elm-stuff/*' \
                  ! -path './.git/*' \
                  ! -path '*.md' \
+                 ! -path '*/vendor/*' \
                  ! -path '*/CMakeFiles/*' \
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
