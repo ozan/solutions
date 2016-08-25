@@ -8,7 +8,7 @@ char *hey_bob(char *phrase) {
   int all_empty = 1;
 
   char ch;
-  while ((ch = *(++phrase)) != '\0') {
+  while ((ch = *phrase++) != '\0') {
     if (ch != ' ')
       is_question = 0;
     if (ch == '?')

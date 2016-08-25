@@ -12,7 +12,7 @@ to increase my understanding of those I don't use day to day.
 | C# | 56 |
 | Haskell | 39 |
 | Racket | 21 |
-| C | 14 |
+| C | 16 |
 | MIPS Assembly | 10 |
 | Rust | 6 |
 | Elm | 4 |
