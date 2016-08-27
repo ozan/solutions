@@ -11,7 +11,7 @@ to increase my understanding of those I don't use day to day.
 | C++ | 67 |
 | C# | 56 |
 | Haskell | 39 |
-| C | 26 |
+| C | 34 |
 | Racket | 21 |
 | MIPS Assembly | 10 |
 | Rust | 6 |
