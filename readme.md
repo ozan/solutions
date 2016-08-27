@@ -10,8 +10,8 @@ to increase my understanding of those I don't use day to day.
 | Clojure | 73 |
 | C++ | 67 |
 | C# | 56 |
+| C | 42 |
 | Haskell | 39 |
-| C | 37 |
 | Racket | 21 |
 | MIPS Assembly | 10 |
 | Rust | 6 |
