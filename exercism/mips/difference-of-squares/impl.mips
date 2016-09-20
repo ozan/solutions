@@ -1,0 +1,32 @@
+# The sum of integers from 1 to n is n(n + 1) / 2
+# Similarly, the sum of squares can be shown to be n(2n + 1)(n + 1) / 6
+# So, calculate sum and sum_sq, then return sum^2 - sum_sq
+#
+# Registers:
+#       a0      n
+#       t0      n + 1
+#       t1      2n + 1
+#       t2      sum
+#       t3      sum_sq
+#       v0      sum^2 - sum_sq
+
+.globl difference_of_squares
+
+difference_of_squares:
+        addi    $t0     $a0     1               # $t0 = n + 1
+        add     $t1     $t0     $a0             # $t1 = 2n + 1
+
+        mul     $t2     $t0     $a0             # $t2 = n(n + 1)
+        srl     $t2     $t2     1               # sum = n(n + 1) / 2
+
+        mul     $t3     $a0     $t1             # $t3 = n(2n + 1)
+        mul     $t3     $t3     $t0             # $t3 = n(2n + 1)(n + 1)
+
+        li      $t4     6
+        div     $t3     $t4
+        mflo    $t3                             # sum_sq = n(2n + 1)(n + 1) / 6
+
+        mul     $v0     $t2     $t2             # $v0 = sum * sum
+        sub     $v0     $v0     $t3             # $v0 = sum * sum - sum_sq
+
+        jr      $ra
