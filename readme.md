@@ -9,8 +9,8 @@ to increase my understanding of those I don't use day to day.
 | JavaScript | 74 |
 | Clojure | 73 |
 | C++ | 67 |
+| C | 58 |
 | C# | 56 |
-| C | 52 |
 | Haskell | 39 |
 | Racket | 21 |
 | MIPS Assembly | 10 |
