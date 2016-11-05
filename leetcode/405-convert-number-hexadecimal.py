@@ -9,7 +9,7 @@ class Solution(object):
         while num > 0:
             digits.append(SYMS[num & 15])
             num >>= 4
-        return ''.join(reversed(digits))
+        return digits and ''.join(reversed(digits)) or '0'
 
 if __name__ == '__main__':
     f = Solution().toHex
