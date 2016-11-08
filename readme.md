@@ -5,7 +5,7 @@ to increase my understanding of those I don't use day to day.
 
 | Language | Problems solved |
 | --- | --: |
-| Python | 135 |
+| Python | 136 |
 | C | 89 |
 | JavaScript | 74 |
 | Clojure | 73 |
