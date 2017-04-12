@@ -1,32 +1,27 @@
 """
 Given a 2D board and a word, find if the word exists in the grid.
-
-TODO: this fails with TLE on really big input
 """
 
 
-def neighbors(board, i, j):
-    return set(
-        (i + di, j + dj)
-        for (di, dj) in ((-1, 0), (1, 0), (0, -1), (0, 1))
-        if 0 <= i + di < len(board)
-        if 0 <= j + dj < len(board[i + di])
-    )
+def does_exist(board, word, word_idx, i, j, visited):
+    if len(word) == word_idx:
+        return True
 
-
-def does_exist(board, substr, candidates, visited):
-    if len(substr) == 1:
-        return substr in [board[i][j] for i, j in candidates]
-
-    for i, j in candidates:
-        if board[i][j] != substr[0]:
+    for (di, dj) in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+        ci = i + di
+        cj = j + dj
+        if not 0 <= ci < len(board) or not 0 <= cj < len(board[ci]) \
+                or board[ci][cj] != word[word_idx] or (ci, cj) in visited:
             continue
+        visited.add((ci, cj))
         has_path = does_exist(
             board,
-            substr[1:],
-            neighbors(board, i, j) - visited,
-            visited.union({(i, j)})
+            word,
+            word_idx + 1,
+            ci, cj,
+            visited
         )
+        visited.remove((ci, cj))
         if has_path:
             return True
     return False
@@ -34,13 +29,59 @@ def does_exist(board, substr, candidates, visited):
 
 class Solution(object):
     def exist(self, board, word):
-        coords = set(
-            (i, j)
-            for i in range(len(board))
-            for j in range(len(board[i]))
-        )
-        return does_exist(board, word, coords, set())
+        for i, row in enumerate(board):
+            for j, val in enumerate(row):
+                if val == word[0] and \
+                        does_exist(board, word, 1, i, j, {(i, j)}):
+                    return True
+        return False
 
+large_board = [
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+]
+large_string = \
+    "baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 if __name__ == '__main__':
     board = [
@@ -52,3 +93,5 @@ if __name__ == '__main__':
     assert s.exist(board, 'ABCCED') is True
     assert s.exist(board, 'SEE') is True
     assert s.exist(board, 'ABCB') is False
+    assert s.exist(large_board, large_string) is True
+    print('ok')
