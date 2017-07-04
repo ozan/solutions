@@ -5,18 +5,18 @@ to increase my understanding of those I don't use day to day.
 
 | Language | Problems solved |
 | --- | --: |
-| Python | 139 |
+| Python | 140 |
 | C | 89 |
 | JavaScript | 74 |
 | Clojure | 73 |
 | C++ | 67 |
-| C# | 56 |
-| Haskell | 43 |
-| Racket | 21 |
+| C# | 57 |
+| Haskell | 44 |
+| Racket | 22 |
 | MIPS Assembly | 11 |
-| Rust | 6 |
-| Elm | 4 |
-| Java | 3 |
+| Java | 11 |
+| Rust | 7 |
+| Elm | 5 |
 | x86 assembly | 0 |
 | Go | 0 |
 | J | 0 |
