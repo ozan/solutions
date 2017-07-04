@@ -8,6 +8,7 @@ function stats {
   find . -type f ! -path '*.spec.js' \
                  ! -ipath '*test.*' \
                  ! -ipath '*tests.*' \
+                 ! -ipath '*Test.java' \
                  ! -path '*/tests/*' \
                  ! -path '*/runner.mips' \
                  ! -path '*/node_modules/*' \
@@ -19,7 +20,7 @@ function stats {
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
   | awk '{ print $2 " " $1 }' \
-  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips) \d+' \
+  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips|java) \d+' \
   | awk 'BEGIN { names["py"] = "Python"
                  names["js"] = "JavaScript"
                  names["c"] = "C"
@@ -30,6 +31,7 @@ function stats {
                  names["rkt"] = "Racket"
                  names["rs"] = "Rust"
                  names["mips"] = "MIPS Assembly"
+                 names["java"] = "Java"
                  names["elm"] = "Elm"}
                { printf("| %s | %s |\n", names[$1], $2) }'
 }
@@ -46,7 +48,6 @@ $(stats)
 | x86 assembly | 0 |
 | Go | 0 |
 | J | 0 |
-| Java | 0 |
 | Lua | 0 |
 | Octave | 0 |
 | OCaml | 0 |
