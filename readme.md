@@ -6,13 +6,13 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 | Python | 142 |
-| C | 93 |
+| C | 94 |
 | JavaScript | 74 |
 | Clojure | 73 |
 | C++ | 67 |
 | C# | 57 |
 | Haskell | 44 |
-| Java | 23 |
+| Java | 25 |
 | Racket | 22 |
 | MIPS Assembly | 11 |
 | Rust | 7 |
