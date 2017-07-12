@@ -13,8 +13,10 @@ char *to_rna(const char *dna) {
   char *rna = (char *)malloc(len + 1);
 
   for (i = 0; i < len; i++)
-    if ((rna[i] = key[(int)dna[i]]) == '.')
+    if ((rna[i] = key[(int)dna[i]]) == '.') {
+      free(rna);
       return NULL;
+    }
 
   rna[i] = '\0';
   return rna;
