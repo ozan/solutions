@@ -6,17 +6,17 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 | Python | 142 |
-| C | 94 |
+| C | 109 |
 | JavaScript | 74 |
 | Clojure | 73 |
 | C++ | 67 |
-| C# | 57 |
-| Haskell | 44 |
-| Java | 25 |
-| Racket | 22 |
+| C# | 56 |
+| Haskell | 43 |
+| Java | 24 |
+| Racket | 21 |
 | MIPS Assembly | 11 |
-| Rust | 7 |
-| Elm | 5 |
+| Rust | 6 |
+| Elm | 4 |
 | x86 assembly | 0 |
 | Go | 0 |
 | J | 0 |
