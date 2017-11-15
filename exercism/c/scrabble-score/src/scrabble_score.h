@@ -1,0 +1,1 @@
+int score(char*letters);

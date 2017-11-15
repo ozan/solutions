@@ -6,7 +6,7 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 | Python | 142 |
-| C | 134 |
+| C | 141 |
 | JavaScript | 74 |
 | Clojure | 73 |
 | C++ | 67 |
@@ -17,8 +17,8 @@ to increase my understanding of those I don't use day to day.
 | MIPS Assembly | 11 |
 | Rust | 6 |
 | Elm | 4 |
+| Go | 1 |
 | x86 assembly | 0 |
-| Go | 0 |
 | J | 0 |
 | Lua | 0 |
 | Octave | 0 |
