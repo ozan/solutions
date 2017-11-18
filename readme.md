@@ -14,8 +14,8 @@ to increase my understanding of those I don't use day to day.
 | Haskell | 43 |
 | Java | 24 |
 | Racket | 21 |
+| Go | 17 |
 | MIPS Assembly | 11 |
-| Go | 11 |
 | Rust | 6 |
 | Elm | 4 |
 | x86 assembly | 0 |
