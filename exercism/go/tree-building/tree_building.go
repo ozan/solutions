@@ -18,8 +18,8 @@ type Node struct {
 
 // Build constructs a tree from a slice of records
 func Build(records []Record) (*Node, error) {
-	nodes := make(map[int]*Node)
 	numRecords := len(records)
+	nodes := make([]*Node, numRecords)
 
 	if numRecords == 0 {
 		return nil, nil

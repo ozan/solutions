@@ -1,35 +1,39 @@
 package robotname
 
-// Robot is 5 bytes
-type Robot [5]byte
+import (
+	"fmt"
+	"math/rand"
+)
 
-var seen = map[string]bool{}
-var seed = 1
+// Robot is a value in [0, 676000) since 676,000 = 26*26*10*10*10
+type Robot uint32
 
-func rand() int {
-	seed = (1103515245*seed + 12345) % (2 << 31)
-	return seed
-}
+const numAvailableNames = 676000
+
+var queue = rand.Perm(numAvailableNames)
+var queuePos uint
 
 // Name returns the robot name, setting it if needed
 func (r *Robot) Name() string {
-	if string(r[:5]) == "\x00\x00\x00\x00\x00" {
+	if *r == 0 {
 		r.Reset()
 	}
-	return string(r[:5])
+	return r.String()
 }
 
 // Reset forces reset of the robot name
 func (r *Robot) Reset() {
-	r[0] = byte('A' + rand()%26)
-	r[1] = byte('A' + rand()%26)
-	r[2] = byte('0' + rand()%10)
-	r[3] = byte('0' + rand()%10)
-	r[4] = byte('0' + rand()%10)
-	s := string(r[:5])
-	if seen[s] {
-		r.Reset()
-		return
+	queuePos++
+	if queuePos >= numAvailableNames {
+		panic("No more available names")
 	}
-	seen[s] = true
+	*r = Robot(queuePos)
+}
+
+// String computes the string form of the robot's uint value
+// TODO this could be cached to avoid repeat computation, if the same
+// robot's name is known to be accessed repeatedly
+func (r *Robot) String() string {
+	n := uint32(queue[*r])
+	return string(fmt.Sprintf("%c%c%d%d%d", 'A'+n/26000, 'A'+(n%26000)/1000, (n%1000)/100, (n%100)/10, n%10))
 }
