@@ -12,7 +12,7 @@ to increase my understanding of those I don't use day to day.
 | C++ | 67 |
 | C# | 56 |
 | Haskell | 43 |
-| Go | 36 |
+| Go | 42 |
 | Java | 24 |
 | Racket | 21 |
 | MIPS Assembly | 11 |
