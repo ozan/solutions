@@ -11,8 +11,8 @@ to increase my understanding of those I don't use day to day.
 | Clojure | 73 |
 | C++ | 67 |
 | C# | 56 |
+| Go | 44 |
 | Haskell | 43 |
-| Go | 42 |
 | Java | 24 |
 | Racket | 21 |
 | MIPS Assembly | 11 |
