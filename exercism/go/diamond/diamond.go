@@ -10,13 +10,9 @@ func Gen(letter byte) (string, error) {
 	dim := 1 + 2*(letter-'A')
 	bs := make([]byte, int(dim)*(int(dim)+1)) // extra +1 needed for \n
 	i := 0
-	// c := byte('A')
 	var col byte
 	back := false
 	for c := byte('A'); c >= 'A'; {
-		// if c == 'A'-1 {
-		// 	break
-		// }
 		for col = 0; col < dim; col++ {
 			if letter-c == col || letter-c == dim-col-1 {
 				bs[i] = c
