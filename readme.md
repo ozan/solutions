@@ -10,8 +10,8 @@ to increase my understanding of those I don't use day to day.
 | JavaScript | 74 |
 | Clojure | 73 |
 | C++ | 67 |
+| Go | 57 |
 | C# | 56 |
-| Go | 50 |
 | Haskell | 43 |
 | Java | 24 |
 | Racket | 21 |
