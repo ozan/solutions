@@ -1,37 +1,38 @@
-def legal_move(board, (i, j)):
-    return not any(
-        oi == i or oj == j or abs(i - oi) == abs(j - oj)
-        for oi, oj in board
-    )
+"""
+Given n, return all solutions to the n-queens problem
 
-
-def formatted(board, n):
-    llchar = [['.'] * n for _ in range(n)]
-    for i, j in board:
-        llchar[i][j] = 'Q'
-    return [''.join(row) for row in llchar]
-
+Strategy: use backtracking search to fill in an n-row list containing
+numbers [0, n) uniquely, where there is also no diagonal attack.
+"""
 
 class Solution(object):
     def solveNQueens(self, n):
-        def place(board, m):
-            if m == n:
-                return [board]
-            return [
-                tail.union({(m, i)})
-                for i in range(n)
-                if legal_move(board, (m, i))
-                for tail in place(board.union({(m, i)}), m + 1)
-            ]
+        solutions, board = [], []
+        
+        def dfs(cols):
+            if len(board) == n: return solutions.append(self.format(board))
+            for i, c in enumerate(cols):
+                for j, d in enumerate(board):
+                    if abs(c - d) == abs(j - len(board)):  # same diagonal
+                        break
+                else:
+                    board.append(c)
+                    dfs(cols[:i] + cols[i+1:])
+                    board.pop()
+        
+        dfs(range(n))
+        return solutions
 
-        return [formatted(b, n) for b in place(set(), 0)]
+    def format(self, board):
+        return [''.join('Q' if i == j else '.' for j in board) for i in range(len(board))]
 
 
 if __name__ == '__main__':
     s = Solution()
     expected = [
-        ['.Q..', '...Q', 'Q...', '..Q.'],
         ['..Q.', 'Q...', '...Q', '.Q..']
+        ['.Q..', '...Q', 'Q...', '..Q.'],
     ]
+    print s.solveNQueens(4)
     assert s.solveNQueens(4) == expected
     print 'ok'
