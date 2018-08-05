@@ -20,7 +20,7 @@ function stats {
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
   | awk '{ print $2 " " $1 }' \
-  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips|go|java) \d+' \
+  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips|go|java|sh) \d+' \
   | awk 'BEGIN { names["py"] = "Python"
                  names["js"] = "JavaScript"
                  names["c"] = "C"
@@ -32,6 +32,7 @@ function stats {
                  names["rs"] = "Rust"
                  names["mips"] = "MIPS Assembly"
                  names["java"] = "Java"
+                 names["sh"] = "Bash"
                  names["go"] = "Go"
                  names["elm"] = "Elm"}
                { printf("| %s | %s |\n", names[$1], $2) }'
@@ -51,7 +52,6 @@ $(stats)
 | Lua | 0 |
 | Octave | 0 |
 | OCaml | 0 |
-| POSIX shell | 0 |
 | Prolog | 0 |
 "
 }
@@ -67,7 +67,7 @@ function prep-all {
   if [ ! -e "$1.clj" ] ; then echo '#!/usr/bin/env lein-exec' > "$1.clj"; fi
   if [ ! -e "$1.rkt" ] ; then echo '#!/usr/bin/env racket --script' > "$1.rkt"; fi
 
-  chmod +x $1.*
+  chmod +x "$1.*"
 }
 
 # compile and run c sharp
