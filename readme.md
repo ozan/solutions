@@ -5,24 +5,24 @@ to increase my understanding of those I don't use day to day.
 
 | Language | Problems solved |
 | --- | --: |
-| Python | 143 |
-| C | 141 |
-| JavaScript | 75 |
+| Python | 163 |
+| C | 139 |
+| JavaScript | 74 |
 | Clojure | 73 |
-| Go | 72 |
+| Go | 68 |
 | C++ | 67 |
-| C# | 57 |
-| Haskell | 43 |
+| C# | 56 |
+| Haskell | 41 |
 | Java | 24 |
 | Racket | 21 |
 | MIPS Assembly | 11 |
+| Bash | 7 |
 | Rust | 6 |
-| Elm | 5 |
+| Elm | 4 |
 | x86 assembly | 0 |
 | J | 0 |
 | Lua | 0 |
 | Octave | 0 |
 | OCaml | 0 |
-| POSIX shell | 0 |
 | Prolog | 0 |
 
