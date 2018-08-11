@@ -6,7 +6,7 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 | Python | 163 |
-| C | 139 |
+| C | 140 |
 | JavaScript | 74 |
 | Clojure | 73 |
 | Go | 68 |
@@ -16,7 +16,7 @@ to increase my understanding of those I don't use day to day.
 | Java | 24 |
 | Racket | 21 |
 | MIPS Assembly | 11 |
-| Bash | 7 |
+| Bash | 10 |
 | Rust | 6 |
 | Elm | 4 |
 | x86 assembly | 0 |
