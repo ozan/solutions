@@ -1,2 +1,2 @@
 **/test/vendor
-*.dSYM/*
+**/tests.out.dSYM/*
