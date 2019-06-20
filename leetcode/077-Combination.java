@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 class Solution {
 
   public static List<List<Integer>> combine(int n, int k) {
