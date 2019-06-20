@@ -102,6 +102,5 @@ int main(void)
    RUN_TEST(test_unshift_with_valid_list);
    RUN_TEST(test_shift_returns_list_data);
 
-   UnityEnd();
-   return 0;
+   return UnityEnd();
 }

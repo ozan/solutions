@@ -5,8 +5,8 @@ to increase my understanding of those I don't use day to day.
 
 | Language | Problems solved |
 | --- | --: |
+| C | 170 |
 | Python | 163 |
-| C | 153 |
 | JavaScript | 74 |
 | Clojure | 73 |
 | Go | 68 |
