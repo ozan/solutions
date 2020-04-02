@@ -7,8 +7,8 @@ to increase my understanding of those I don't use day to day.
 | --- | --: |
 | C | 174 |
 | Python | 173 |
+| Go | 77 |
 | JavaScript | 74 |
-| Go | 74 |
 | Clojure | 73 |
 | C++ | 67 |
 | C# | 56 |
