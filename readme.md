@@ -15,14 +15,11 @@ to increase my understanding of those I don't use day to day.
 | Haskell | 41 |
 | Java | 24 |
 | Racket | 21 |
-| MIPS Assembly | 11 |
+| MIPS assembly | 11 |
 | Bash | 10 |
 | Rust | 6 |
+| x86-64 assembly | 5 |
 | Elm | 4 |
-| x86 assembly | 0 |
 | J | 0 |
-| Lua | 0 |
-| Octave | 0 |
-| OCaml | 0 |
 | Prolog | 0 |
 
