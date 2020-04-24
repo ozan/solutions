@@ -20,7 +20,7 @@ function stats {
   | awk 'BEGIN { FS="." } { counts[$NF]++  } END { for (a in counts) printf("%s %s \n", counts[a], a) }' \
   | sort -n -r \
   | awk '{ print $2 " " $1 }' \
-  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips|go|java|sh) \d+' \
+  | grep -E '^(clj|py|js|c|cs|cpp|hs|rkt|elm|rs|mips|asm|go|java|sh) \d+' \
   | awk 'BEGIN { names["py"] = "Python"
                  names["js"] = "JavaScript"
                  names["c"] = "C"
@@ -30,7 +30,8 @@ function stats {
                  names["hs"] = "Haskell"
                  names["rkt"] = "Racket"
                  names["rs"] = "Rust"
-                 names["mips"] = "MIPS Assembly"
+                 names["mips"] = "MIPS assembly"
+                 names["asm"] = "x86-64 assembly"
                  names["java"] = "Java"
                  names["sh"] = "Bash"
                  names["go"] = "Go"
@@ -47,7 +48,6 @@ to increase my understanding of those I don't use day to day.
 | Language | Problems solved |
 | --- | --: |
 $(stats)
-| x86 assembly | 0 |
 | J | 0 |
 | Lua | 0 |
 | Octave | 0 |
