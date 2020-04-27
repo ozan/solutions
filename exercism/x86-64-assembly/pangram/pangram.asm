@@ -2,21 +2,17 @@ section .text
 global is_pangram
 is_pangram:
 	; rdi: source string
-	xor rax, rax
+	xor edx, edx
 .loop:
 	movzx rcx, byte [rdi]			; read next char
-	cmp rcx, 'a'					; if upper case, make lower
-	jae .set_bit
-	add rcx, 32						; in ascii, X + 32 = x
-.set_bit:
+	bts rcx, 5						; force lower case (in ascii, 'a' + 32 -> 'A')
 	sub rcx, 'a'
-	bts rax, rcx					; set the corresponding bit in our bit set
+	bts edx, ecx					; set the corresponding bit in our bit set
 	inc rdi
 	cmp byte [rdi], 0
 	jne .loop
-.end:
-	and rax, 0x0000000003ffffff
-	cmp rax, 0x0000000003ffffff
+	xor eax, eax
+	and edx, 0x03ffffff
+	cmp edx, 0x03ffffff
 	sete al
-	movzx rax, al
     ret
