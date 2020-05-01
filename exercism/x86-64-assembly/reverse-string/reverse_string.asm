@@ -3,15 +3,15 @@ global reverse
 reverse:
 	mov rsi, rdi
 .find_end:
-	cmp byte [rsi], 0	; until we reach a null byte...
-	je .loop
-	inc rsi				; increment the source pointer
-	jmp .find_end
+	inc rsi					; increment the source pointer
+	cmp byte [rsi-1], 0 	; until we reach a null byte
+	jne .find_end
+	sub rsi, 2
 .loop:
-	mov al, [rsi - 1]   ; read from end
-	mov cl, [rdi]		; read from start
-	mov [rsi - 1], cl	; write back to end
-	mov [rdi], al		; write back to start
+	movzx eax, byte [rsi]   ; read from end
+	movzx ecx, byte [rdi]	; read from start
+	mov [rsi], cl			; write back to end
+	mov [rdi], al			; write back to start
 	inc rdi
 	dec rsi
 	cmp rdi, rsi

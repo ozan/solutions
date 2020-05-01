@@ -1,7 +1,11 @@
 default rel
 
 section .rodata
-mapping: db "U G   C            A"
+mapping:
+	db 0	
+	times 64 db ' '
+	db "U G   C            A"
+	times 165 db ' '
 
 section .text
 global to_rna
@@ -11,13 +15,11 @@ to_rna:
  	lea rax, [mapping]
 	xor edx, edx
 .loop:
-	cmp byte [rdi + rdx], 0
-	je .end
-	movzx rcx, byte [rdi + rdx]	; get dna char
-	mov cl, [rax + rcx - 'A']   ; get translated rna char
+	movzx ecx, byte [rdi + rdx]	; get dna char
+	mov cl, [rax + rcx]   ; get translated rna char
 	mov [rsi + rdx], cl			; write back rna char
 	inc rdx
-	jmp .loop
-.end:
+	cmp byte [rdi + rdx], 0
+	jne .loop
     ret
 
