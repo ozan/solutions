@@ -1,39 +1,71 @@
-import heapq
+from collections import defaultdict
 
-sample = """0
+
+def ba5d(data):
+    start, end = data[0], data[1]
+
+    g = defaultdict(list)
+    inv = defaultdict(list)
+    for line in data[2:]:
+        adj, w = line.split(':')
+        a, b = adj.split('->')
+        g[a].append((b, int(w)))  # TODO do we need w here?
+        inv[b].append((a, int(w)))
+
+    # first, topsort g
+
+    topsort = []
+    visited = set()
+
+    def dfs(node):
+        visited.add(node)
+        for nxt, _ in g[node]:
+            if nxt not in visited:
+                dfs(nxt)
+        topsort.append(node)
+
+    for node in list(g.keys()):
+        if node not in visited:
+            dfs(node)
+
+    topsort.reverse()
+
+    # then, compute maximum path from start to end, by calculating
+    # for each in topsort order
+    best = {start: (0, None)}
+    for n in topsort:
+        x, y = 0, None
+        for prev, w in inv[n]:
+            try:
+                xx = w + best[prev][0]
+            except KeyError:
+                continue
+            if xx > x:
+                x, y = xx, prev
+        if y:
+            best[n] = (x, y)
+
+    score, prev = best[end]
+    print(score)
+    path = [end]
+    while prev:
+        path.append(prev)
+        prev = best[prev][1]
+
+    print('->'.join(reversed(path)))
+
+    return best[end]
+
+
+sample = """9
 4
-0->1:7
-0->2:4
+9->1:7
+9->2:4
 2->3:2
 1->4:1
 3->4:3""".split('\n')
 
+# print(ba5d(sample))
 
-def run(case):
-    start, end = case[0], case[1]
-    weights = {}
-    for line in case[2:]:
-        a, rest = line.split('->')
-        b, c = rest.split(':')
-        try:
-            weights[a][b] = -int(c)
-        except KeyError:
-            weights[a] = {b: -int(c)}
-    
-    q = [(0, start, [start])]
-    while q:
-        weight, n, path = heapq.heappop(q)
-        print(weight, n, path)
-        if n == end:
-            return -weight, '->'.join(path)
-        for k, v in weights[n].items():
-            heapq.heappush(q, (weight + v, k, path + [k]))
-    return None
-
-
-        
-
-
-print(run(sample))
-
-
+with open('/Users/oz/Downloads/rosalind_ba5d (1).txt') as f:
+    ba5d(f.read().rstrip().split('\n'))
