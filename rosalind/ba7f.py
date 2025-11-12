@@ -9,9 +9,11 @@ def ba7f(f):
 
     g = defaultdict(list)
     tags = {}
+    bt = {}
     edges = [line.rstrip().split('->') for line in f]
     for a, b in edges:
         g[a].append(b)
+        bt[b] = []
         tags[a] = tags[b] = 0
 
     sk = defaultdict(list)
@@ -22,10 +24,7 @@ def ba7f(f):
             continue
         tags[v] = 1
         # TODO more compact representation
-        sk[v] = [{sym: (0, []) if sym == c else (float('inf'), []) for sym in SYMBOLS} for c in v]
-
-    # verdicts = {}
-    # out = []
+        sk[v] = [{sym: 0 if sym == c else float('inf') for sym in SYMBOLS} for c in v]
 
     final_processed = None
     while True:
@@ -41,32 +40,22 @@ def ba7f(f):
             final_processed = v
 
             nn = len(sk[children[0]])  # TODO zip instead?
-    
+
             for i in range(nn):
                 d = {}
                 for k in SYMBOLS:
                     tot = 0
-                    foob = {}
                     for kid in children:
-                        x, xj = min((j_cost[0] + (j != k), j) for j, j_cost in sk[kid][i].items())
+                        x, xj = min((j_cost + (j != k), j) for j, j_cost in sk[kid][i].items())
                         tot += x
-                        foob[kid] = xj  # TODO OMG
+                        try:
+                            bt[kid][i][k] = xj
+                        except IndexError:
+                            bt[kid].append({k: xj})
 
-                    d[k] = (tot, foob)
+                    d[k] = tot
 
                 sk[v].append(d)
-
-            """
-            label = []
-            for scores in sk[v]:
-                c, s = min(scores.items(), key=lambda x: x[1])
-                label.append(c)
-            label = ''.join(label)  # TODO avoid shadowing
-            for kid in children:
-                seq = verdicts[kid] if kid in verdicts else kid  # TODO cleanup
-                out.append((label, seq, sum(j != k for j, k in zip(label, seq))))
-            verdicts[v] = label
-            """
 
         if not remaining:
             break
@@ -74,9 +63,9 @@ def ba7f(f):
     label = []
     total = 0
     for scores in sk[final_processed]:
-        c, s = min(scores.items(), key=lambda x: x[1][0])
+        c, s = min(scores.items(), key=lambda x: x[1])
         label.append(c)
-        total += s[0]
+        total += s
     print(total)
 
     verdict = {final_processed: ''.join(label)}
@@ -90,9 +79,8 @@ def ba7f(f):
             verd = []
             diff = 0
             for i, x in enumerate(parent_label):
-                sc, d = sk[v][i][x]
-                verd.append(d[kid])
-                if d[kid] != x:
+                verd.append(bt[kid][i][x])
+                if bt[kid][i][x] != x:
                     diff += 1
             vv = ''.join(verd)
             verdict[kid] = vv
