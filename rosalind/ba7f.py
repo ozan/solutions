@@ -20,12 +20,14 @@ def ba7f(f):
         tags[a] = tags[b] = 0
         try:
             int(b)
+            # sk[b] = [{sym: 0 for sym in SYMBOLS} for c in b]
         except ValueError:
             # this is a leaf
             nn = nn or len(b)
             tags[b] = 1
-            sk[b] = [{sym: 0 if sym == c else nn for sym in SYMBOLS} for c in b]
+#            sk[b] = [{sym: 0 if sym == c else nn for sym in SYMBOLS} for c in b]
 
+    sk = {v: [{sym: 0 if g[v] or sym == v[i] else nn for sym in SYMBOLS} for i in range(nn)] for v in g}
     bt = {v: [{sym: None for sym in SYMBOLS} for _ in range(nn)] for v in g}
     # run the DP algorithm to completion
     root = None
@@ -42,15 +44,11 @@ def ba7f(f):
             root = v
 
             for i in range(nn):
-                d = {}
                 for k in SYMBOLS:
-                    tot = 0
                     for kid in children:
                         x, xj = min((j_cost + (j != k), j) for j, j_cost in sk[kid][i].items())
-                        tot += x
+                        sk[v][i][k] += x
                         bt[kid][i][k] = xj
-                    d[k] = tot
-                sk[v].append(d)
 
         if not remaining:
             break
