@@ -9,24 +9,26 @@ def ba7f(f):
 
     g = defaultdict(list)
     tags = {}
-    bt = {}
-    edges = [line.rstrip().split('->') for line in f]
-    for a, b in edges:
-        g[a].append(b)
-        bt[b] = []
-        tags[a] = tags[b] = 0
-
+    nn = None
     sk = defaultdict(list)
 
-    # initialize leaves
-    for _, v in edges:
-        if v in g:
-            continue
-        tags[v] = 1
-        # TODO more compact representation
-        sk[v] = [{sym: 0 if sym == c else float('inf') for sym in SYMBOLS} for c in v]
+    # initialize our graph and Sk lookup
+    for line in f:
+        a, b = line.rstrip().split('->')
+        g[a].append(b)
+        g[b]
+        tags[a] = tags[b] = 0
+        try:
+            int(b)
+        except ValueError:
+            # this is a leaf
+            nn = nn or len(b)
+            tags[b] = 1
+            sk[b] = [{sym: 0 if sym == c else nn for sym in SYMBOLS} for c in b]
 
-    final_processed = None
+    bt = {v: [{sym: None for sym in SYMBOLS} for _ in range(nn)] for v in g}
+    # run the DP algorithm to completion
+    root = None
     while True:
         remaining = False
         for v, children in g.items():
@@ -37,9 +39,7 @@ def ba7f(f):
 
             remaining = True
             tags[v] = 1
-            final_processed = v
-
-            nn = len(sk[children[0]])  # TODO zip instead?
+            root = v
 
             for i in range(nn):
                 d = {}
@@ -48,29 +48,25 @@ def ba7f(f):
                     for kid in children:
                         x, xj = min((j_cost + (j != k), j) for j, j_cost in sk[kid][i].items())
                         tot += x
-                        try:
-                            bt[kid][i][k] = xj
-                        except IndexError:
-                            bt[kid].append({k: xj})
-
+                        bt[kid][i][k] = xj
                     d[k] = tot
-
                 sk[v].append(d)
 
         if not remaining:
             break
 
+    # compute the final root label and total
     label = []
     total = 0
-    for scores in sk[final_processed]:
+    for scores in sk[root]:
         c, s = min(scores.items(), key=lambda x: x[1])
         label.append(c)
         total += s
     print(total)
 
-    verdict = {final_processed: ''.join(label)}
-
-    stack = [final_processed]
+    # backtrack to compute inner node labels and weights
+    verdict = {root: ''.join(label)}
+    stack = [root]
     out = []
     while stack:
         v = stack.pop()
