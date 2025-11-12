@@ -1,3 +1,7 @@
+# TODO would be nice to find a more compact representation, which would probably
+# also simplify the DP and backtracking logic. It also feels like there's a better
+# way to track incomplete nodes, rather than tagging
+
 from collections import defaultdict
 import io
 
@@ -12,7 +16,7 @@ def ba7f(f):
     nn = None
     sk = defaultdict(list)
 
-    # initialize our graph and Sk lookup
+    # initialize graph and tags
     for line in f:
         a, b = line.rstrip().split('->')
         g[a].append(b)
@@ -20,32 +24,31 @@ def ba7f(f):
         tags[a] = tags[b] = 0
         try:
             int(b)
-            # sk[b] = [{sym: 0 for sym in SYMBOLS} for c in b]
         except ValueError:
             # this is a leaf
             nn = nn or len(b)
             tags[b] = 1
-#            sk[b] = [{sym: 0 if sym == c else nn for sym in SYMBOLS} for c in b]
 
-    sk = {v: [{sym: 0 if g[v] or sym == v[i] else nn for sym in SYMBOLS} for i in range(nn)] for v in g}
+    # initialize sk lookup and bt table
+    sk = {v: [{sym: 0 if g[v] or sym == v[i] else nn for sym in SYMBOLS} for i in range(nn)]
+          for v in g}
     bt = {v: [{sym: None for sym in SYMBOLS} for _ in range(nn)] for v in g}
+
     # run the DP algorithm to completion
     root = None
     while True:
         remaining = False
         for v, children in g.items():
-            if tags[v]:
-                continue  # already processed  TODO surely better way to track this
-            if 0 in {tags[k] for k in children}:
-                continue  # not ripe TODO again better way to track?
+            if tags[v] or 0 in {tags[k] for k in children}:
+                continue  # already processed or not ripe  TODO surely better way to track this
 
             remaining = True
             tags[v] = 1
             root = v
 
-            for i in range(nn):
-                for k in SYMBOLS:
-                    for kid in children:
+            for kid in children:
+                for i in range(nn):
+                    for k in SYMBOLS:
                         x, xj = min((j_cost + (j != k), j) for j, j_cost in sk[kid][i].items())
                         sk[v][i][k] += x
                         bt[kid][i][k] = xj
@@ -54,13 +57,9 @@ def ba7f(f):
             break
 
     # compute the final root label and total
-    label = []
-    total = 0
-    for scores in sk[root]:
-        c, s = min(scores.items(), key=lambda x: x[1])
-        label.append(c)
-        total += s
-    print(total)
+    label, scores = zip(*(min(place.items(), key=lambda x: x[1]) for place in sk[root]))
+
+    print(sum(scores))
 
     # backtrack to compute inner node labels and weights
     verdict = {root: ''.join(label)}
