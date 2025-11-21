@@ -1,0 +1,23 @@
+{
+  "authors": [
+    "wolf99"
+  ],
+  "contributors": [
+    "ryanplusplus"
+  ],
+  "files": {
+    "solution": [
+      "darts.c",
+      "darts.h"
+    ],
+    "test": [
+      "test_darts.c"
+    ],
+    "example": [
+      ".meta/example.c",
+      ".meta/example.h"
+    ]
+  },
+  "blurb": "Calculate the points scored in a single toss of a Darts game.",
+  "source": "Inspired by an exercise created by a professor Della Paolera in Argentina"
+}
