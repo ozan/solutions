@@ -1,0 +1,25 @@
+{
+  "authors": [
+    "keiravillekode"
+  ],
+  "contributors": [
+    "jagdish-15",
+    "wolf99"
+  ],
+  "files": {
+    "solution": [
+      "reverse_string.c",
+      "reverse_string.h"
+    ],
+    "test": [
+      "test_reverse_string.c"
+    ],
+    "example": [
+      ".meta/example.c",
+      ".meta/example.h"
+    ]
+  },
+  "blurb": "Reverse a given string.",
+  "source": "Introductory challenge to reverse an input string",
+  "source_url": "https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb"
+}

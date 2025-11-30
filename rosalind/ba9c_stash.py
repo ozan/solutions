@@ -19,6 +19,7 @@ def ba9c(string):
 
     # build the trie
     for start in range(len(string)):
+        # p = string[start:]  # TODO use index instead of slice
         i = start
         node = 0
         while i < len(string):

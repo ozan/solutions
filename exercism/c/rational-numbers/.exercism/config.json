@@ -1,0 +1,25 @@
+{
+  "authors": [
+    "wolf99"
+  ],
+  "contributors": [
+    "ryanplusplus",
+    "xihh87"
+  ],
+  "files": {
+    "solution": [
+      "rational_numbers.c",
+      "rational_numbers.h"
+    ],
+    "test": [
+      "test_rational_numbers.c"
+    ],
+    "example": [
+      ".meta/example.c",
+      ".meta/example.h"
+    ]
+  },
+  "blurb": "Implement rational numbers.",
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Rational_number"
+}

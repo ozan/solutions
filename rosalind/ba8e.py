@@ -1,41 +1,28 @@
 import io
 
 
+def d_avg(D, xs, ys):
+    return sum(D[x][y] for x in xs for y in ys) / (len(xs) * len(ys))
+
+
 def ba8e(f):
     n = int(f.readline())
     D = [[float(x) for x in line.split(' ')] for line in f]
 
-    clusters = [{i} for i in range(n)]  # cluster id to contained points... TODO needed?
-    T = {i: [] for i in range(n)}  # TODO why not just use list?
+    clusters = [{i} for i in range(n)]
     merged = set()
 
-    while len(merged) < len(clusters) - 1:
-        _, c_i, c_j = min((D[i][j], i, j) for i in range(len(D)) for j in range(i) if i not in merged and j not in merged)  # TODO better way to avoid?
-        # c_new = c_i + c_j
-        c_new = len(T)
-        T[c_new] = [c_i, c_j]
-        merged.add(c_i)
-        merged.add(c_j)
-        new_points = clusters[c_i] | clusters[c_j]
-       
-        row = []
-        for c_id, points in enumerate(clusters):
-            if c_id in merged:
-                x = 0.0
-            else:
-                x = sum(D[i][j] for i in points for j in new_points) / (len(points) * len(new_points))
-                # x = min(D[i][j] for i in points for j in new_points)
-            row.append(x)
-            # print(x)
-        row.append(0.0)
-        D.append(row)
-        clusters.append(new_points)
+    for _ in range(n-1):
+        _, c_i, c_j = min((D[i][j], i, j)
+                          for i in range(len(D)) for j in range(i)
+                          if i not in merged and j not in merged)
+        merged |= {c_i, c_j}
+        c_new = clusters[c_i] | clusters[c_j]
+        D.append([0.0 if i in merged else d_avg(D, c_new, clusters[i])
+                  for i in range(len(clusters))])
+        clusters.append(c_new)
 
-    # print(clusters)
-    for c in clusters:
-        if len(c) < 2:
-            continue
-        print(' '.join(f'{x+1}' for x in c))
+    print('\n'.join(' '.join(f'{x+1}' for x in c) for c in clusters if len(c) > 1))
 
 
 sample = io.StringIO("""7
@@ -48,6 +35,6 @@ sample = io.StringIO("""7
 0.89 1.55 0.73 0.88 0.55 0.80 0.00""")
 
 
-ba8e(sample)
+# ba8e(sample)
 
-# with open('/Users/oz/Downloads/rosalind_ba8e.txt') as f: ba8e(f)
+with open('/Users/oz/Downloads/rosalind_ba8e.txt') as f: ba8e(f)

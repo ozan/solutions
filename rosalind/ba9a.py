@@ -1,7 +1,7 @@
 
 
 def ba9a(patterns):
-    g = {0: {}}
+    g = [{}]
 
     for p in patterns:
         node = 0
@@ -11,10 +11,10 @@ def ba9a(patterns):
             else:
                 nxt = len(g)
                 g[node][c] = nxt
-                g[nxt] = {}
+                g.append({})
                 node = nxt
 
-    for a, v in g.items():
+    for a, v in enumerate(g):
         for c, b in v.items():
             print(f'{a}->{b}:{c}')
 
@@ -23,9 +23,9 @@ sample = """ATAGA
 ATC
 GAT""".split('\n')
 
-# ba9a(sample)
+ba9a(sample)
 
-with open('/Users/oz/Downloads/rosalind_ba9a.txt') as f:
-    ba9a(f.read().rstrip().split('\n'))
+# with open('/Users/oz/Downloads/rosalind_ba9a.txt') as f:
+#    ba9a(f.read().rstrip().split('\n'))
 
 

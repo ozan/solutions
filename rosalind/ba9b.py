@@ -1,7 +1,7 @@
 
 
 def build_trie(patterns):
-    g = {0: {}}
+    g = [{}]
 
     for p in patterns:
         node = 0
@@ -11,10 +11,9 @@ def build_trie(patterns):
             else:
                 nxt = len(g)
                 g[node][c] = nxt
-                g[nxt] = {}
+                g.append({})
                 node = nxt
         g[node][''] = True
-
     return g
 
 
@@ -45,9 +44,9 @@ sample = """AATCGGGTTCAATCGGGGT
 ATCG
 GGGT""".split('\n')
 
-# ba9b(sample)
+ba9b(sample)
 
-with open('/Users/oz/Downloads/rosalind_ba9b.txt') as f:
-    ba9b(f.read().rstrip().split('\n'))
+# with open('/Users/oz/Downloads/rosalind_ba9b.txt') as f:
+#    ba9b(f.read().rstrip().split('\n'))
 
 
