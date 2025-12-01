@@ -1,25 +1,13 @@
 from pprint import pprint
 
 
-def leaves(g, node):
-    """
-    DFS to find all leaves reachable from the given node
-    """
-    out = []
-    stack = [node]
-    while stack:
-        n = stack.pop()
-        for k, v in g[n].items():
-            if k == '$':
-                out.append(v)
-            else:
-                stack.append(v[0])
-    return out
-
-
 def modified_suffix_trie(text):
     """
-    Construct a modified suffix trie, per the pseudocode on p 165
+    Construct a modified suffix trie, per the pseudocode on p 165.
+
+    Vertices are simply incrementing integers, starting at 0 for the root.
+    Edges are mappings of the next letter to the next node, annotated too with the start
+    index of the first occurence of that substring
     """
     g = {0: {}}
 
@@ -50,8 +38,10 @@ def sufix_tree(g):
     Convert the modified suffix trie to a tree by replacing each non-branching path depth first
     """
     stack = [0]
+    tree = {}
     while stack:
         n = stack.pop()
+        tree[n] = {}
         for k, v in g[n].items():
             if k == '$': continue
             nxt_node, first_i, lngth = v
@@ -66,65 +56,39 @@ def sufix_tree(g):
                 except TypeError:  # could be end of string TODO cleanup
                     lngth += 1
                     break
+            tree[n][(first_i, lngth)] = nxt_node
             g[n][k] = (nxt_node, first_i, lngth)
             stack.append(nxt_node)
-    return g
-
-
-def find(tree, pattern):
-    """
-    Find the given pattern in the suffix tree, if any
-
-    Not actually required for the problem, but good to know that we can!
-    """
-    node = 0
-    i = 0
-    while i < len(pattern):
-        c = pattern[i]
-        if c in tree[node]:
-            match = tree[node][c]
-            node = match[0]
-            i += match[2]
-        else:
-            return []
-    return leaves(tree, node)
-
-
-def print_edges(tree, text):
-    stack = [0]
-    while stack:
-        node = stack.pop()
-        for k, v in tree[node].items():
-            if k == '$':
-                continue
-            print(text[v[1]:v[1]+v[2]])
-            stack.append(v[0])
+    return tree
 
 
 def ba9d(text):
+    text += '$'
     g = modified_suffix_trie(text)
 
-    pprint(g)
+    # pprint(g)
 
     gg = sufix_tree(g)
-    pprint(gg)
+    # pprint(gg)
 
-    """
-    for pattern in ('antenna', 'ana', 'as'):
-        idxs = find(gg, pattern)
-        if idxs:
-            print(f'{pattern} FOUND starting at {", ".join(str(n) for n in idxs)}')
-        else:
-            print(f'{pattern} not found')
-    """
+    # find the deepest node that still has two or more children
+    stack = [(0, '')]
+    best = (0, '')
+    while stack:
+        node, ss = stack.pop()
+        for k, v in gg[node].items():
+            start, lngth = k
+            if not gg[v]:
+                continue
+            # print(text[start:start+lngth], depth + lngth)
+            nxt = ss + text[start:start+lngth]
+            best = max(best, (len(nxt), nxt))
+            stack.append((v, nxt))
+    print(best[1])
 
-    print_edges(gg, text)
 
+ba9d('ATATCGTTTTATCGTT')
+# ba9d('panamabanana')
 
-ba9d('banana')
-
-# ba9d('ATATCGTTTTATCGTT$')
 
 # with open('/Users/oz/Downloads/rosalind_ba9d.txt') as f: ba9d(f.read().rstrip())
-
-
