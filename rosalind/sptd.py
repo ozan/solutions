@@ -84,7 +84,7 @@ def p(t, indent=0):
             p(c, indent + 2)
 
 
-def find_splits(root):
+def find_splits(root, taxa_map):
     """
     Determine all the non-trivial splits using a postorder traversal of the tree
     """
@@ -92,12 +92,12 @@ def find_splits(root):
 
     def f(node):
         if not node.children:
-            return [node.name]
+            return 1 << taxa_map[node.name]
 
-        s = []
+        s = 0
         for c in node.children:
-            s.extend(f(c))
-        sp.append(sorted(s))
+            s |= f(c)
+        sp.append(s)
 
         return s
 
@@ -107,30 +107,34 @@ def find_splits(root):
 
 def sptd(f):
     taxa = sorted(f.readline().rstrip().split(' '))
+    taxa_map = {taxon: i for i, taxon in enumerate(taxa)}
+    num_taxa = len(taxa)
+    all_taxa_bm = (1 << num_taxa) - 1
+
     t1 = parse_newick(f.readline())
     t2 = parse_newick(f.readline())
 
-    sp1 = find_splits(t1)
-    sp2 = find_splits(t2)
+    sp1 = find_splits(t1, taxa_map)
+    sp2 = find_splits(t2, taxa_map)
 
-    # cannonicalize... TODO surely a better way
-    sp1_can, sp2_can = [], []
+    # cannonicalize...
+    sp1_can, sp2_can = set(), set()
     for splits, canonical in ((sp1, sp1_can), (sp2, sp2_can)):
-        for sp in splits:
-            if sp[0] != taxa[0]:
-                xx = [x for x in taxa if x not in sp]
+        for sp_bm in splits:
+            # if the first taxon is not in the split, take the complement
+            if not (sp_bm & 1):
+                xx = all_taxa_bm ^ sp_bm
             else:
-                xx = sp
+                xx = sp_bm
+            # number of set bits
+            c = bin(xx).count('1')
 
-            if 2 <= len(xx) < len(taxa) - 1:
-                canonical.append(xx)
+            if 2 <= c < num_taxa - 1:
+                canonical.add(xx)
 
-    common = 0
-    for x in sp1_can:
-        if x in sp2_can:  # TODO surely a better way
-            common += 1
+    common = len(sp1_can & sp2_can)
 
-    out = 2 * (len(taxa) - 3) - 2 * common
+    out = 2 * (num_taxa - 3) - 2 * common
     print(out)
     return out
 
