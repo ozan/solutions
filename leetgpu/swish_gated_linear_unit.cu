@@ -3,7 +3,7 @@
 __global__ void swiglu_kernel(const float* input, float* output, int halfN) {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     if (i < halfN) {
-        output[i] = input[i] * input[halfN+i] / (1 + exp(-input[i]));
+        output[i] = input[i] * input[halfN+i] / (1.0f + expf(-input[i]));
     }
 
 }

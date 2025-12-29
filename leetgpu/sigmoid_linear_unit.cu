@@ -3,7 +3,7 @@
 __global__ void silu_kernel(const float* input, float* output, int N) {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     if (i < N) {
-        output[i] = input[i] / (1 + exp(-input[i]));
+        output[i] = input[i] / (1.0f + expf(-input[i]));
     }
 }
 
@@ -15,4 +15,5 @@ extern "C" void solve(const float* input, float* output, int N) {
     silu_kernel<<<blocksPerGrid, threadsPerBlock>>>(input, output, N);
     cudaDeviceSynchronize();
 }
+
 

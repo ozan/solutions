@@ -2,12 +2,7 @@
 
 __global__ void invert_kernel(unsigned char* image, int width, int height) {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
-    if (i < width * height) {
-        int pix = i << 2;
-        image[pix+0] = ~image[pix+0];
-        image[pix+1] = ~image[pix+1];
-        image[pix+2] = ~image[pix+2];
-    }
+    if (i < width * height) ((unsigned int*)image)[i] ^= 0x00FFFFFF;
 }
 // image_input, image_output are device pointers (i.e. pointers to memory on the GPU)
 extern "C" void solve(unsigned char* image, int width, int height) {
